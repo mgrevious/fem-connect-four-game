@@ -1,13 +1,11 @@
-import './App.css';
+import Game from './features/game';
+// import StartMenu from './features/start-menu';
+// import Game from './features/game';
 
 function App() {
   return (
     <>
-      <div className="w-full">
-        <div className="container mx-auto flex items-center justify-center min-h-screen">
-          <h1>Connect Four App</h1>
-        </div>
-      </div>
+      <Game />
     </>
   );
 }
