@@ -1,3 +1,6 @@
+// import { useAppSelector } from '../../app/hooks';
+import styles from './grid.module.css';
+
 let value = 1;
 
 interface Props {
@@ -8,6 +11,7 @@ interface Props {
 const Rows: React.FC<Props> = ({ column, selectedRowId }) => {
   value = value + 1;
   console.log(value);
+  // const { gridLocationsMap } = useAppSelector((state) => state.game);
 
   return Array(6)
     .fill('')
@@ -17,7 +21,9 @@ const Rows: React.FC<Props> = ({ column, selectedRowId }) => {
         key={index}
         className={`${
           selectedRowId === index + 1 ? 'opacity-100' : 'opacity-0'
-        } w-[71px] h-[71px] bg-green-500 flex items-center justify-center mb-[17px]`}
+        } ${styles.gamePiece} ${
+          styles.redLarge
+        } w-[71px] h-[71px] flex items-center justify-center mb-[17px]`}
       ></div>
     ));
 };

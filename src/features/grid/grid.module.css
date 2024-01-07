@@ -13,3 +13,33 @@
   height: 584px;
   width: 632px;
 }
+
+.gamePiece {
+  &.redSmall {
+    background-color: transparent;
+    background-image: url('../../assets/images/counter-red-small.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  &.yellowLarge {
+    background-color: transparent;
+    background-image: url('../../assets/images/counter-yellow-small.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  @media (min-width: 640px) {
+    &.redLarge {
+      background-color: transparent;
+      background-image: url('../../assets/images/counter-red-large.svg');
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+    &.yellowLarge {
+      background-color: transparent;
+      background-image: url('../../assets/images/counter-yellow-large.svg');
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+  }
+}

@@ -20,10 +20,8 @@ const Grid = () => {
     <div className="w-full">
       <div className="flex justify-center items-center min-h-screen">
         <div className={`${styles.gridBack} relative`}>
-          <div
-            className={`${styles.gridFront} flex absolute top-0 left-0 right-0 p-[17px]`}
-          >
-            <div id="a" className={rowClass}>
+          <div className="flex p-[17px]">
+            <div className={rowClass}>
               <Rows column="a" selectedRowId={1} />
             </div>
             <div className={rowClass}>
@@ -45,6 +43,9 @@ const Grid = () => {
               <Rows column="f" />
             </div>
           </div>
+          <div
+            className={`${styles.gridFront} flex absolute top-0 left-0 right-0 p-[17px]`}
+          />
           <TurnDisplay />
         </div>
       </div>
