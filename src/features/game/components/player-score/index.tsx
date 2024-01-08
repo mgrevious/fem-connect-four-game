@@ -1,8 +1,8 @@
-import Player1Svg from '../../assets/images/player-one.svg';
-import Player2Svg from '../../assets/images/player-two.svg';
-import globalStyles from '../../app.module.css';
+import Player1Svg from '../../../../assets/images/player-one.svg';
+import Player2Svg from '../../../../assets/images/player-two.svg';
+import globalStyles from '../../../../app.module.css';
 import React from 'react';
-import { Player, PlayerName } from '../game/game-slice';
+import { Player, PlayerName } from '../../game-slice';
 
 interface Props {
   player: Player;

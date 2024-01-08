@@ -1,22 +1,24 @@
 import { useAppSelector } from '../../app/hooks';
-import Grid from '../grid';
-import PlayerScore from '../player-score';
-import Selector from '../selector';
+import Grid from './components/Grid';
+import PlayerScore from './components/player-score';
+import Header from './components/Header';
 
 const Game = () => {
   const { player1, player2 } = useAppSelector((state) => state.game);
   return (
     <>
-      <div className="w-full">
-        <div className="flex flex-col justify-center items-center min-h-screen relative pt-[43px]">
-          <div className="flex justify-between items-center gap-5 min-h-screen">
+      <main className="w-full">
+        <div className="flex flex-col justify-center items-center">
+          <div className="w-[635px]">
+            <Header />
+          </div>
+          <div className="flex justify-between items-start gap-5">
             <PlayerScore player={player1} />
             <Grid />
             <PlayerScore player={player2} />
           </div>
-          <Selector />
         </div>
-      </div>
+      </main>
     </>
   );
 };

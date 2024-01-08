@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { CreateArrayWithLengthX, NumericRange } from '../../utils/number-range';
-import { getGridLocationsMap } from './helpers';
 
 export enum PlayerType {
   CPU,
@@ -18,11 +17,6 @@ export enum PlayerName {
   PLAYER_TWO,
 }
 
-export type Position = {
-  row: 1 | 2 | 3 | 4 | 5 | 6;
-  col: 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g';
-};
-
 export type Score = NumericRange<CreateArrayWithLengthX<0>, 50>;
 
 export type Player = {
@@ -32,37 +26,68 @@ export type Player = {
   type: PlayerType.HUMAN | PlayerType.CPU;
 };
 
+export type RowId = '1' | '2' | '3' | '4' | '5' | '6';
+
+export type ColumnId = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g';
+
+export const gridColumns: ColumnId[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+export const gridRows: RowId[] = ['1', '2', '3', '4', '5', '6'];
+export type GamePieceState = { selected: boolean; color?: PlayerColor };
+
+type ColumnState = {
+  rows: Map<RowId, GamePieceState>;
+  lastPosition?: RowId;
+};
+
+const getGridMap = () => {
+  const gridRows: RowId[] = ['1', '2', '3', '4', '5', '6'];
+  const gridMap = new Map<ColumnId, ColumnState>();
+
+  for (const col of gridColumns) {
+    const rowMap = new Map<RowId, GamePieceState>();
+    for (const row of gridRows) {
+      rowMap.set(row, { selected: false });
+    }
+    gridMap.set(col, { rows: rowMap });
+  }
+
+  return gridMap;
+};
+
 export interface GameState {
   player1: Player;
   player2: Player;
-  activePlayer: PlayerName;
+  activePlayer: Player;
   gameWinner?: PlayerName;
   isComplete: boolean;
   isPaused: boolean;
   isRestarted: boolean;
-  currentPosition?: Position;
-  gridLocationsMap: Map<string, { selected: boolean }>;
+  gameStarted?: boolean;
+  gridMap?: Map<ColumnId, ColumnState> | undefined;
+  selectedColumn: ColumnId;
 }
 
+const activePlayer: Player = {
+  name: PlayerName.PLAYER_ONE,
+  currentScore: 0,
+  type: PlayerType.HUMAN,
+  color: PlayerColor.RED,
+};
+
 const initialState: GameState = {
-  player1: {
-    name: PlayerName.PLAYER_ONE,
-    currentScore: 0,
-    type: PlayerType.HUMAN,
-    color: PlayerColor.RED,
-  },
+  player1: activePlayer,
   player2: {
     name: PlayerName.PLAYER_TWO,
     currentScore: 0,
     type: PlayerType.HUMAN,
     color: PlayerColor.YELLOW,
   },
-  activePlayer: PlayerName.PLAYER_ONE,
-  currentPosition: { row: 1, col: 'a' },
+  activePlayer,
+  gameStarted: false,
   isComplete: false,
   isPaused: false,
   isRestarted: false,
-  gridLocationsMap: getGridLocationsMap(),
+  selectedColumn: 'a',
 };
 
 const gameSlice = createSlice({
@@ -83,9 +108,64 @@ const gameSlice = createSlice({
         state.player2.currentScore += 1;
       }
     },
+    startGame(state) {
+      state.gameStarted = true;
+    },
+    toggleActivePlayer(state) {
+      // debugger;
+      if (state.gridMap) {
+        if (state.activePlayer.name === PlayerName.PLAYER_ONE) {
+          state.activePlayer = state.player2;
+        } else {
+          state.activePlayer = state.player1;
+        }
+      }
+    },
+    selectGridPosition(
+      state,
+      action: PayloadAction<{
+        columnId: ColumnId;
+      }>
+    ) {
+      // debugger;
+      const { columnId } = action.payload;
+      if (!state.gridMap) {
+        state.gridMap = getGridMap();
+      }
+      const column = state.gridMap.get(columnId);
+      if (column) {
+        const rowAsNum = Number(column.lastPosition);
+        if (!column.lastPosition) {
+          column.lastPosition = '6';
+          column.rows.set('6', {
+            selected: true,
+            color: state.activePlayer.color,
+          });
+        } else if (rowAsNum > 1) {
+          const newPosition = `${rowAsNum - 1}` as RowId;
+          column.rows.set(newPosition, {
+            selected: true,
+            color: state.activePlayer.color,
+          });
+          column.lastPosition = newPosition;
+        }
+      }
+    },
+    selectColumn(state, action: PayloadAction<ColumnId>) {
+      // use columnId to search gridMap
+      // if gridMap key contains column, get available row and set it
+      state.selectedColumn = action.payload;
+      // console.log('result', result);
+    },
   },
 });
 
 export const gameReducer = gameSlice.reducer;
 
-export const { updateGameResults } = gameSlice.actions;
+export const {
+  toggleActivePlayer,
+  startGame,
+  updateGameResults,
+  selectColumn,
+  selectGridPosition,
+} = gameSlice.actions;
