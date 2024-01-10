@@ -10,7 +10,7 @@ import MarkerRedSvg from '../../../../assets/images/marker-red.svg';
 import MarkerYellowSvg from '../../../../assets/images/marker-yellow.svg';
 
 const Selector: React.FC = () => {
-  const { activePlayer, selectedColumn } = useAppSelector(
+  const { activePlayer, selectedColumn, gridMap } = useAppSelector(
     (state) => state.game
   );
   const dispatch = useAppDispatch();
@@ -29,7 +29,9 @@ const Selector: React.FC = () => {
               <div id="" key={index} className="flex justify-center w-[71px]">
                 <button
                   onClick={() => {
-                    dispatch(toggleActivePlayer());
+                    if (gridMap) {
+                      dispatch(toggleActivePlayer());
+                    }
                     dispatch(
                       selectGridPosition({
                         columnId: column,
@@ -50,7 +52,9 @@ const Selector: React.FC = () => {
             >
               <button
                 onClick={() => {
-                  dispatch(toggleActivePlayer());
+                  if (gridMap) {
+                    dispatch(toggleActivePlayer());
+                  }
                   dispatch(selectColumn(column));
                   dispatch(
                     selectGridPosition({

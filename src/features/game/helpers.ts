@@ -44,3 +44,5 @@ const positions = [
 ] as const;
 
 export type Position = (typeof positions)[number];
+
+export function analyzeGrid(gridMap: )

@@ -36,7 +36,7 @@ export type GamePieceState = { selected: boolean; color?: PlayerColor };
 
 type ColumnState = {
   rows: Map<RowId, GamePieceState>;
-  lastPosition?: RowId;
+  highestRowPosition?: RowId;
 };
 
 const getGridMap = () => {
@@ -62,6 +62,7 @@ export interface GameState {
   isComplete: boolean;
   isPaused: boolean;
   isRestarted: boolean;
+  endGame: boolean;
   gameStarted?: boolean;
   gridMap?: Map<ColumnId, ColumnState> | undefined;
   selectedColumn: ColumnId;
@@ -84,6 +85,7 @@ const initialState: GameState = {
   },
   activePlayer,
   gameStarted: false,
+  endGame: false,
   isComplete: false,
   isPaused: false,
   isRestarted: false,
@@ -112,13 +114,10 @@ const gameSlice = createSlice({
       state.gameStarted = true;
     },
     toggleActivePlayer(state) {
-      // debugger;
-      if (state.gridMap) {
-        if (state.activePlayer.name === PlayerName.PLAYER_ONE) {
-          state.activePlayer = state.player2;
-        } else {
-          state.activePlayer = state.player1;
-        }
+      if (state.activePlayer.name === PlayerName.PLAYER_ONE) {
+        state.activePlayer = state.player2;
+      } else {
+        state.activePlayer = state.player1;
       }
     },
     selectGridPosition(
@@ -134,9 +133,9 @@ const gameSlice = createSlice({
       }
       const column = state.gridMap.get(columnId);
       if (column) {
-        const rowAsNum = Number(column.lastPosition);
-        if (!column.lastPosition) {
-          column.lastPosition = '6';
+        const rowAsNum = Number(column.highestRowPosition);
+        if (!column.highestRowPosition) {
+          column.highestRowPosition = '6';
           column.rows.set('6', {
             selected: true,
             color: state.activePlayer.color,
@@ -147,7 +146,7 @@ const gameSlice = createSlice({
             selected: true,
             color: state.activePlayer.color,
           });
-          column.lastPosition = newPosition;
+          column.highestRowPosition = newPosition;
         }
       }
     },
@@ -157,15 +156,34 @@ const gameSlice = createSlice({
       state.selectedColumn = action.payload;
       // console.log('result', result);
     },
+    selectGameWinner(state) {
+      if (state.activePlayer.name === PlayerName.PLAYER_ONE) {
+        state.player2.currentScore = (state.player2.currentScore + 1) as Score;
+      } else {
+        state.player1.currentScore = (state.player1.currentScore + 1) as Score;
+      }
+    },
+    checkForGameWinner(state) {
+      if (state.gridMap) {
+        // const result = analyzeGrid(gridMap, player1, player2);
+      } else if (
+        state.player1.currentScore >= 50 ||
+        state.player2.currentScore >= 50
+      ) {
+        state.endGame = true;
+      }
+    },
   },
 });
 
 export const gameReducer = gameSlice.reducer;
 
 export const {
+  checkForGameWinner,
   toggleActivePlayer,
   startGame,
   updateGameResults,
+  selectGameWinner,
   selectColumn,
   selectGridPosition,
 } = gameSlice.actions;

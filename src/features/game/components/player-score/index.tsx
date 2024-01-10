@@ -3,12 +3,14 @@ import Player2Svg from '../../../../assets/images/player-two.svg';
 import globalStyles from '../../../../app.module.css';
 import React from 'react';
 import { Player, PlayerName } from '../../game-slice';
+import { useAppSelector } from '../../../../app/hooks';
 
 interface Props {
   player: Player;
 }
 
 const PlayerScore: React.FC<Props> = ({ player }) => {
+  const { player1, player2 } = useAppSelector((state) => state.game);
   const positionClass =
     'absolute -top-8 left-0 right-0 flex justify-center w-full';
   const isPlayerOne = player.name === PlayerName.PLAYER_ONE;
@@ -19,7 +21,9 @@ const PlayerScore: React.FC<Props> = ({ player }) => {
       <p className="text-xl uppercase font-bold w-full text-center">
         Player {isPlayerOne ? '1' : '2'}
       </p>
-      <p className="text-[56px] font-bold text-center">0</p>
+      <p className="text-[56px] font-bold text-center">
+        {isPlayerOne ? player1.currentScore : player2.currentScore}
+      </p>
       {isPlayerOne ? (
         <div className={positionClass}>
           <img

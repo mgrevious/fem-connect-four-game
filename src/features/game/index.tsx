@@ -12,7 +12,7 @@ const Game = () => {
           <div className="w-[635px]">
             <Header />
           </div>
-          <div className="flex justify-between items-start gap-5">
+          <div className="flex justify-between items-center gap-5">
             <PlayerScore player={player1} />
             <Grid />
             <PlayerScore player={player2} />
