@@ -63,7 +63,7 @@ export interface GameState {
   isPaused: boolean;
   isRestarted: boolean;
   endGame: boolean;
-  gameStarted?: boolean;
+  endGame?: boolean;
   gridMap?: Map<ColumnId, ColumnState> | undefined;
   selectedColumn: ColumnId;
   timerReset: boolean;
@@ -85,7 +85,7 @@ const initialState: GameState = {
     color: PlayerColor.YELLOW,
   },
   activePlayer,
-  gameStarted: false,
+  endGame: false,
   endGame: false,
   isComplete: false,
   isPaused: false,
@@ -113,7 +113,7 @@ const gameSlice = createSlice({
       }
     },
     startGame(state) {
-      state.gameStarted = true;
+      state.endGame = false;
     },
     toggleActivePlayer(state) {
       if (state.activePlayer.name === PlayerName.PLAYER_ONE) {
@@ -179,6 +179,10 @@ const gameSlice = createSlice({
         state.endGame = true;
       }
     },
+    restartGame(state) {
+      state.gameWinner = undefined;
+      state.endGame = false;
+    },
   },
 });
 
@@ -192,4 +196,5 @@ export const {
   autoSelectWinner,
   selectColumn,
   selectGridPosition,
+  restartGame,
 } = gameSlice.actions;

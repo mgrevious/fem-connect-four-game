@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useState } from 'react';
 import Countdown, { CountdownApi } from 'react-countdown';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import {
@@ -9,8 +9,11 @@ import {
 } from '../../game-slice';
 import styles from './display.module.css';
 
-const TurnDisplay = () => {
-  let countdownApi: CountdownApi | null = null;
+interface Props {
+  countdownApi: MutableRefObject<CountdownApi | null>;
+}
+
+const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
   const dispatch = useAppDispatch();
   const [restartKey, setRestartKey] = useState(1);
   const [showCountdown, setShowCountdown] = useState(true);
@@ -19,9 +22,9 @@ const TurnDisplay = () => {
   );
 
   useEffect(() => {
-    if (countdownApi && endGame) {
+    if (countdownApi.current && endGame) {
       // if game has ended, stop countdown timer
-      countdownApi.stop();
+      countdownApi.current.stop();
       setShowCountdown(false);
     }
   }, [endGame, countdownApi]);
@@ -55,7 +58,7 @@ const TurnDisplay = () => {
               key={restartKey}
               ref={(countdown) => {
                 if (countdown) {
-                  countdownApi = countdown.getApi();
+                  countdownApi.current = countdown.getApi();
                 }
               }}
               autoStart

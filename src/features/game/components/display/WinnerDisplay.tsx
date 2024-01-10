@@ -1,9 +1,15 @@
-import React from 'react';
-import { useAppSelector } from '../../../../app/hooks';
+import React, { MutableRefObject } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import appStyles from '../../../../app.module.css';
-import { PlayerName } from '../../game-slice';
+import { PlayerName, restartGame } from '../../game-slice';
+import { CountdownApi } from 'react-countdown';
 
-const WinnerDisplay: React.FC = () => {
+interface Props {
+  countdownApi: MutableRefObject<CountdownApi | null>;
+}
+
+const WinnerDisplay: React.FC<Props> = ({ countdownApi }) => {
+  const dispatch = useAppDispatch();
   const { gameWinner } = useAppSelector((state) => state.game);
   return (
     <div className="w-full absolute -bottom-[139px] flex justify-center items-center">
@@ -16,7 +22,15 @@ const WinnerDisplay: React.FC = () => {
         <p className="text-center text-[56px] leading-[56px] mb-2 uppercase font-bold">
           wins
         </p>
-        <button className="bg-primary-dark text-white font-bold rounded-full uppercase text-base py-2 px-6 hover:bg-primary">
+        <button
+          onClick={() => {
+            if (countdownApi.current) {
+              countdownApi.current.start();
+              dispatch(restartGame());
+            }
+          }}
+          className="bg-primary-dark text-white font-bold rounded-full uppercase text-base py-2 px-6 hover:bg-primary"
+        >
           play again
         </button>
       </div>
