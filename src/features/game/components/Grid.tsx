@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { gridColumns } from '../game-slice';
-import TurnDisplay from './turn-display';
+import { useAppSelector } from '../../../app/hooks';
+import Display from './display';
 import Selector from './selector';
 import Rows from './Rows';
 
@@ -8,6 +9,7 @@ import styles from '../game.module.css';
 
 const Grid = () => {
   const [counter, setCounter] = useState(0);
+  const { gameWinner } = useAppSelector((state) => state.game);
 
   useEffect(() => {
     if (counter < 3) {
@@ -32,7 +34,7 @@ const Grid = () => {
           <div
             className={`${styles.gridFront} flex absolute top-0 left-0 right-0 p-[17px]`}
           />
-          <TurnDisplay />
+          <Display showWinner={gameWinner !== undefined} />
           <Selector />
         </div>
       </div>

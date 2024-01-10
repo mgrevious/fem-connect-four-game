@@ -66,6 +66,7 @@ export interface GameState {
   gameStarted?: boolean;
   gridMap?: Map<ColumnId, ColumnState> | undefined;
   selectedColumn: ColumnId;
+  timerReset: boolean;
 }
 
 const activePlayer: Player = {
@@ -90,6 +91,7 @@ const initialState: GameState = {
   isPaused: false,
   isRestarted: false,
   selectedColumn: 'a',
+  timerReset: false,
 };
 
 const gameSlice = createSlice({
@@ -119,6 +121,7 @@ const gameSlice = createSlice({
       } else {
         state.activePlayer = state.player1;
       }
+      state.timerReset = true;
     },
     selectGridPosition(
       state,
@@ -156,19 +159,22 @@ const gameSlice = createSlice({
       state.selectedColumn = action.payload;
       // console.log('result', result);
     },
-    selectGameWinner(state) {
+    autoSelectWinner(state) {
       if (state.activePlayer.name === PlayerName.PLAYER_ONE) {
         state.player2.currentScore = (state.player2.currentScore + 1) as Score;
+        state.gameWinner = state.player2.name;
       } else {
         state.player1.currentScore = (state.player1.currentScore + 1) as Score;
+        state.gameWinner = state.player1.name;
       }
+      state.endGame = true;
     },
     checkForGameWinner(state) {
       if (state.gridMap) {
         // const result = analyzeGrid(gridMap, player1, player2);
       } else if (
-        state.player1.currentScore >= 50 ||
-        state.player2.currentScore >= 50
+        state.player1.currentScore > 49 ||
+        state.player2.currentScore > 49
       ) {
         state.endGame = true;
       }
@@ -183,7 +189,7 @@ export const {
   toggleActivePlayer,
   startGame,
   updateGameResults,
-  selectGameWinner,
+  autoSelectWinner,
   selectColumn,
   selectGridPosition,
 } = gameSlice.actions;

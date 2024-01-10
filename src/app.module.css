@@ -1,11 +1,19 @@
 /* $black: #000000; */
 
+@define-mixin border {
+  border-left: 3px solid black;
+  border-right: 3px solid black;
+  border-top: 3px solid black;
+  border-bottom: 13px solid black;
+}
+
 .border {
-  border-left: 3px solid #000000;
-  border-right: 3px solid #000000;
-  border-top: 3px solid #000000;
-  border-bottom: 13px solid #000000;
+  @mixin border;
   &:hover {
     border-color: #5c2dd5;
   }
+}
+
+.borderNoHover {
+  @mixin border;
 }

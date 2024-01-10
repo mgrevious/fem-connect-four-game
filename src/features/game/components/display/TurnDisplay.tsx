@@ -4,17 +4,17 @@ import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import {
   PlayerName,
   toggleActivePlayer,
-  selectGameWinner,
-  checkForGameWinner,
+  autoSelectWinner,
+  PlayerColor,
 } from '../../game-slice';
-import styles from './turn-display.module.css';
+import styles from './display.module.css';
 
 const TurnDisplay = () => {
   let countdownApi: CountdownApi | null = null;
   const dispatch = useAppDispatch();
   const [restartKey, setRestartKey] = useState(1);
   const [showCountdown, setShowCountdown] = useState(true);
-  const { activePlayer, gameWinner, endGame } = useAppSelector(
+  const { activePlayer, gameWinner, endGame, timerReset } = useAppSelector(
     (state) => state.game
   );
 
@@ -26,8 +26,18 @@ const TurnDisplay = () => {
     }
   }, [endGame, countdownApi]);
 
+  useEffect(() => {
+    if (timerReset) {
+      setRestartKey(1);
+    }
+  }, [timerReset]);
+
   return (
-    <div className={`${styles.timer} flex justify-center`}>
+    <div
+      className={`${styles.timer} ${
+        activePlayer.color === PlayerColor.RED ? styles.red : styles.yellow
+      } flex justify-center`}
+    >
       <div className="w-[197px] pt-11 px-6 text-white font-bold">
         <p className="text-center mb-2 uppercase">
           {endGame ? (
@@ -54,12 +64,12 @@ const TurnDisplay = () => {
                 return seconds;
               }}
               onComplete={() => {
-                dispatch(toggleActivePlayer());
+                // if there is no winner, auto select winner
                 if (!gameWinner) {
-                  dispatch(selectGameWinner());
+                  dispatch(autoSelectWinner());
                 }
-                dispatch(checkForGameWinner());
-                setRestartKey(restartKey + 1);
+                // toggle the active player
+                dispatch(toggleActivePlayer());
               }}
             />
           ) : (

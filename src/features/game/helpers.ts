@@ -45,4 +45,4 @@ const positions = [
 
 export type Position = (typeof positions)[number];
 
-export function analyzeGrid(gridMap: )
+// export function analyzeGrid(gridMap: )
