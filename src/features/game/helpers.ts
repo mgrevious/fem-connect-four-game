@@ -70,6 +70,16 @@ export function getGridMap() {
   return gridMap;
 }
 
+export function createGrid() {
+  const grid: GamePieceState[][] = [];
+  for (let i = 0; i < 7; i++) {
+    grid.push(
+      Array(6).fill({ selected: false, color: undefined } as GamePieceState)
+    );
+  }
+  return grid;
+}
+
 export function resetGame(state: GameState, player1: Player, player2: Player) {
   state.gridMap = getGridMap();
   state.endGame = false;
