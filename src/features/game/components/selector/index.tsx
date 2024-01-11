@@ -1,19 +1,16 @@
 import React from 'react';
-import { PlayerColor, toggleActivePlayer } from '../../game-slice';
+import { ColumnNum, PlayerColor, toggleActivePlayer } from '../../game-slice';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import {
-  gridColumns,
-  selectColumn,
-  selectGridPosition,
-} from '../../game-slice';
+import { selectColumn, selectGridPosition } from '../../game-slice';
 import MarkerRedSvg from '../../../../assets/images/marker-red.svg';
 import MarkerYellowSvg from '../../../../assets/images/marker-yellow.svg';
 
 const Selector: React.FC = () => {
-  const { activePlayer, selectedColumn, endGame } = useAppSelector(
+  const { activePlayer, selectedColumn, endGame, gridMap } = useAppSelector(
     (state) => state.game
   );
   const dispatch = useAppDispatch();
+  const gridColumns: ColumnNum[] = [0, 1, 2, 3, 4, 5, 6];
 
   let markerSrc = MarkerRedSvg;
   if (activePlayer.color === PlayerColor.YELLOW) {
@@ -28,14 +25,12 @@ const Selector: React.FC = () => {
             return (
               <div id="" key={index} className="flex justify-center w-[71px]">
                 <button
-                  disabled={endGame}
+                  disabled={
+                    endGame || gridMap[selectedColumn].lastPosition === 0
+                  }
                   onClick={() => {
                     dispatch(toggleActivePlayer());
-                    dispatch(
-                      selectGridPosition({
-                        columnId: column,
-                      })
-                    );
+                    dispatch(selectGridPosition(column));
                   }}
                 >
                   <img src={markerSrc} alt="Marker" />
@@ -56,11 +51,7 @@ const Selector: React.FC = () => {
                 onClick={() => {
                   dispatch(toggleActivePlayer());
                   dispatch(selectColumn(column));
-                  dispatch(
-                    selectGridPosition({
-                      columnId: column,
-                    })
-                  );
+                  dispatch(selectGridPosition(column));
                 }}
               >
                 <img src={markerSrc} alt="Marker" />

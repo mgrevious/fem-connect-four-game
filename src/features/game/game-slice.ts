@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { CreateArrayWithLengthX, NumericRange } from '../../utils/number-range';
-import { getGridMap, resetGame } from './helpers';
+import { ColumnData, RowNum, createGrid, resetGame } from './helpers';
 
 export enum PlayerType {
   CPU,
@@ -33,18 +33,9 @@ export type Player = {
   type: PlayerType.HUMAN | PlayerType.CPU;
 };
 
-export type RowId = '1' | '2' | '3' | '4' | '5' | '6';
+export type ColumnNum = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
-export type ColumnId = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g';
-
-export const gridColumns: ColumnId[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
-export const gridRows: RowId[] = ['1', '2', '3', '4', '5', '6'];
 export type GamePieceState = { selected: boolean; color?: PlayerColor };
-
-export type ColumnState = {
-  rows: Map<RowId, GamePieceState>;
-  highestRowPosition?: RowId;
-};
 export interface GameState {
   player1: Player;
   player2: Player;
@@ -54,8 +45,8 @@ export interface GameState {
   isComplete: boolean;
   isPaused: boolean;
   endGame: boolean;
-  gridMap?: Map<ColumnId, ColumnState> | undefined;
-  selectedColumn: ColumnId;
+  gridMap: ColumnData[]; // Map<ColumnId, ColumnState> | undefined;
+  selectedColumn: ColumnNum;
   timerReset: boolean;
   currentView: AppView;
 }
@@ -82,9 +73,10 @@ const initialState: GameState = {
   endGame: false,
   isComplete: false,
   isPaused: false,
-  selectedColumn: 'a',
+  selectedColumn: 0,
   timerReset: false,
   currentView: AppView.MAIN_MENU,
+  gridMap: createGrid(),
 };
 
 const gameSlice = createSlice({
@@ -127,42 +119,30 @@ const gameSlice = createSlice({
       }
       state.timerReset = true;
     },
-    selectGridPosition(
-      state,
-      action: PayloadAction<{
-        columnId: ColumnId;
-      }>
-    ) {
-      const { columnId } = action.payload;
-      if (!state.gridMap) {
-        state.gridMap = getGridMap();
-      }
-      const column = state.gridMap.get(columnId);
-      if (column) {
-        const rowAsNum = Number(column.highestRowPosition);
-        if (!column.highestRowPosition) {
-          column.highestRowPosition = '6';
-          column.rows.set('6', {
-            selected: true,
-            color:
-              state.activePlayer.color === PlayerColor.RED
-                ? PlayerColor.YELLOW
-                : PlayerColor.RED,
-          });
-        } else if (rowAsNum > 1) {
-          const newPosition = `${rowAsNum - 1}` as RowId;
-          column.rows.set(newPosition, {
-            selected: true,
-            color:
-              state.activePlayer.color === PlayerColor.RED
-                ? PlayerColor.YELLOW
-                : PlayerColor.RED,
-          });
-          column.highestRowPosition = newPosition;
+    selectGridPosition(state, action: PayloadAction<ColumnNum>) {
+      const columnNum = action.payload;
+      const color =
+        state.activePlayer.color === PlayerColor.RED
+          ? PlayerColor.YELLOW
+          : PlayerColor.RED;
+
+      const selectedColumn = state.gridMap[columnNum];
+      const lastPosition = selectedColumn.lastPosition;
+
+      if (columnNum < state.gridMap.length && columnNum >= 0) {
+        if (lastPosition === undefined) {
+          selectedColumn.rows[5].selected = true;
+          selectedColumn.rows[5].color = color;
+          selectedColumn.lastPosition = 5;
+        } else if (lastPosition && lastPosition > 0) {
+          const row = (lastPosition - 1) as RowNum;
+          selectedColumn.rows[row].selected = true;
+          selectedColumn.rows[row].color = color;
+          selectedColumn.lastPosition = row;
         }
       }
     },
-    selectColumn(state, action: PayloadAction<ColumnId>) {
+    selectColumn(state, action: PayloadAction<ColumnNum>) {
       // use columnId to search gridMap
       // if gridMap key contains column, get available row and set it
       state.selectedColumn = action.payload;
@@ -192,7 +172,7 @@ const gameSlice = createSlice({
     restartGame(state) {
       state.gameWinner = undefined;
       state.endGame = false;
-      state.gridMap = getGridMap();
+      state.gridMap = createGrid();
       if (state.startingPlayer.name === PlayerName.PLAYER_ONE) {
         state.activePlayer = state.player2;
         state.startingPlayer = state.player2;

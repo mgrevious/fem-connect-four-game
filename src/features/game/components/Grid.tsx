@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
-import { gridColumns } from '../game-slice';
 import { useAppSelector } from '../../../app/hooks';
 import Display from './display';
 import Selector from './selector';
 import Rows from './Rows';
 
 import styles from '../game.module.css';
+import { ColumnNum } from '../game-slice';
 
 const Grid = () => {
   const [counter, setCounter] = useState(0);
-  const { gameWinner, activePlayer } = useAppSelector((state) => state.game);
-  console.log('activePlayer: ', activePlayer);
+  const { gameWinner, gridMap } = useAppSelector((state) => state.game);
 
   useEffect(() => {
     if (counter < 3) {
@@ -26,9 +25,9 @@ const Grid = () => {
       <div className="flex justify-center">
         <div className={`${styles.gridBack} relative`}>
           <div className="flex p-[17px]">
-            {gridColumns.map((column, index) => (
+            {gridMap.map((column, index) => (
               <div key={index} className={rowClass}>
-                <Rows column={column} />
+                <Rows data={column.rows} columnIndex={index as ColumnNum} />
               </div>
             ))}
           </div>
