@@ -13,7 +13,7 @@ const Header: React.FC = () => {
             onClick={() => {
               dispatch(pauseGame(true));
             }}
-            className="py-[10px] px-[21px] text-white font-bold bg-primary-dark uppercase rounded-[30px]"
+            className="py-[10px] px-[21px] text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90"
           >
             menu
           </button>
@@ -22,7 +22,7 @@ const Header: React.FC = () => {
           <img src={MenuSvg} alt="Menu Icon" />
         </div>
         <div>
-          <button className="py-[12px] px-6 text-white font-bold bg-primary-dark uppercase rounded-[30px]">
+          <button className="py-[12px] px-6 text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90">
             restart
           </button>
         </div>
