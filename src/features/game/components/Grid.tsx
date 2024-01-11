@@ -9,7 +9,8 @@ import styles from '../game.module.css';
 
 const Grid = () => {
   const [counter, setCounter] = useState(0);
-  const { gameWinner } = useAppSelector((state) => state.game);
+  const { gameWinner, activePlayer } = useAppSelector((state) => state.game);
+  console.log('activePlayer: ', activePlayer);
 
   useEffect(() => {
     if (counter < 3) {

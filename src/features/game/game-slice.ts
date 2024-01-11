@@ -61,9 +61,7 @@ export interface GameState {
   gameWinner?: PlayerName;
   isComplete: boolean;
   isPaused: boolean;
-  isRestarted: boolean;
   endGame: boolean;
-  endGame?: boolean;
   gridMap?: Map<ColumnId, ColumnState> | undefined;
   selectedColumn: ColumnId;
   timerReset: boolean;
@@ -86,10 +84,8 @@ const initialState: GameState = {
   },
   activePlayer,
   endGame: false,
-  endGame: false,
   isComplete: false,
   isPaused: false,
-  isRestarted: false,
   selectedColumn: 'a',
   timerReset: false,
 };
@@ -113,7 +109,11 @@ const gameSlice = createSlice({
       }
     },
     startGame(state) {
+      state.gridMap = getGridMap();
       state.endGame = false;
+    },
+    pauseGame(state, action: PayloadAction<boolean>) {
+      state.isPaused = action.payload;
     },
     toggleActivePlayer(state) {
       if (state.activePlayer.name === PlayerName.PLAYER_ONE) {
@@ -129,7 +129,6 @@ const gameSlice = createSlice({
         columnId: ColumnId;
       }>
     ) {
-      // debugger;
       const { columnId } = action.payload;
       if (!state.gridMap) {
         state.gridMap = getGridMap();
@@ -141,13 +140,19 @@ const gameSlice = createSlice({
           column.highestRowPosition = '6';
           column.rows.set('6', {
             selected: true,
-            color: state.activePlayer.color,
+            color:
+              state.activePlayer.color === PlayerColor.RED
+                ? PlayerColor.YELLOW
+                : PlayerColor.RED,
           });
         } else if (rowAsNum > 1) {
           const newPosition = `${rowAsNum - 1}` as RowId;
           column.rows.set(newPosition, {
             selected: true,
-            color: state.activePlayer.color,
+            color:
+              state.activePlayer.color === PlayerColor.RED
+                ? PlayerColor.YELLOW
+                : PlayerColor.RED,
           });
           column.highestRowPosition = newPosition;
         }
@@ -160,6 +165,7 @@ const gameSlice = createSlice({
       // console.log('result', result);
     },
     autoSelectWinner(state) {
+      // debugger;
       if (state.activePlayer.name === PlayerName.PLAYER_ONE) {
         state.player2.currentScore = (state.player2.currentScore + 1) as Score;
         state.gameWinner = state.player2.name;
@@ -197,4 +203,5 @@ export const {
   selectColumn,
   selectGridPosition,
   restartGame,
+  pauseGame,
 } = gameSlice.actions;

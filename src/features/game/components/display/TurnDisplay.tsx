@@ -17,17 +17,24 @@ const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
   const dispatch = useAppDispatch();
   const [restartKey, setRestartKey] = useState(1);
   const [showCountdown, setShowCountdown] = useState(true);
-  const { activePlayer, gameWinner, endGame, timerReset } = useAppSelector(
-    (state) => state.game
-  );
+  const [remainingTime, setRemainingTime] = useState(30);
+  const { activePlayer, gameWinner, endGame, isPaused, timerReset } =
+    useAppSelector((state) => state.game);
 
   useEffect(() => {
-    if (countdownApi.current && endGame) {
-      // if game has ended, stop countdown timer
-      countdownApi.current.stop();
-      setShowCountdown(false);
+    if (countdownApi.current) {
+      if (endGame) {
+        // if game has ended, stop countdown timer
+        countdownApi.current.stop();
+        setShowCountdown(false);
+      } else if (isPaused) {
+        // if in-game menu is open, pause countdown timer
+        countdownApi.current.pause();
+      } else {
+        countdownApi.current.start();
+      }
     }
-  }, [endGame, countdownApi]);
+  }, [endGame, isPaused, countdownApi]);
 
   useEffect(() => {
     if (timerReset) {
@@ -61,10 +68,13 @@ const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
                   countdownApi.current = countdown.getApi();
                 }
               }}
-              autoStart
-              date={Date.now() + 30 * 1000}
+              autoStart={false}
+              date={Date.now() + remainingTime * 1000}
               renderer={({ seconds }) => {
                 return seconds;
+              }}
+              onPause={({ seconds }) => {
+                setRemainingTime(seconds);
               }}
               onComplete={() => {
                 // if there is no winner, auto select winner

@@ -36,7 +36,7 @@ const StartMenu = () => {
               </div>
             </div>
             <button
-              className={`${globalStyles.border} w-full uppercase text-2xl font-bold px-5 active:border-b-8 active:translate-y-1 active:transition-transform rounded-[20px] bg-mustard h-[85px] mb-[14px]`}
+              className={`${globalStyles.border} w-full uppercase text-2xl font-bold px-5 active:border-b-8 active:translate-y-1 active:transition-transform bg-mustard h-[85px] mb-[14px]`}
             >
               <span className="flex items-center justify-between">
                 <span>player vs player</span>
@@ -48,7 +48,7 @@ const StartMenu = () => {
               </span>
             </button>
             <button
-              className={`${globalStyles.border} w-full uppercase text-2xl font-bold px-5 active:border-b-8 active:translate-y-1 active:transition-transform rounded-[20px] bg-white h-[85px] mb-[10px]`}
+              className={`${globalStyles.border} w-full uppercase text-2xl font-bold px-5 active:border-b-8 active:translate-y-1 active:transition-transform bg-white h-[85px] mb-[10px]`}
             >
               <span className="flex items-center justify-start">
                 <span>game rules</span>

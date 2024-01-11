@@ -2,6 +2,7 @@ import { useAppSelector } from '../../app/hooks';
 import Grid from './components/Grid';
 import PlayerScore from './components/player-score';
 import Header from './components/Header';
+import InGameMenu from './components/ingame-menu';
 
 const Game = () => {
   const { player1, player2 } = useAppSelector((state) => state.game);
@@ -18,6 +19,7 @@ const Game = () => {
             <PlayerScore player={player2} />
           </div>
         </div>
+        <InGameMenu />
       </main>
     </>
   );

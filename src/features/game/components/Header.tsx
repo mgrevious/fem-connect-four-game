@@ -1,12 +1,20 @@
 import React from 'react';
 import MenuSvg from '../../../assets/images/logo.svg';
+import { useAppDispatch } from '../../../app/hooks';
+import { pauseGame } from '../game-slice';
 
 const Header: React.FC = () => {
+  const dispatch = useAppDispatch();
   return (
     <header>
       <nav className="flex justify-between items-center my-12">
         <div>
-          <button className="py-[10px] px-[21px] text-white font-bold bg-primary-dark uppercase rounded-[30px]">
+          <button
+            onClick={() => {
+              dispatch(pauseGame(true));
+            }}
+            className="py-[10px] px-[21px] text-white font-bold bg-primary-dark uppercase rounded-[30px]"
+          >
             menu
           </button>
         </div>
