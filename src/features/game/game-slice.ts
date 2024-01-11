@@ -1,7 +1,14 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { CreateArrayWithLengthX, NumericRange } from '../../utils/number-range';
-import { ColumnData, RowNum, createGrid, resetGame } from './helpers';
+import {
+  ColumnData,
+  RowNum,
+  createGrid,
+  findWinner,
+  getPlayerColor,
+  resetGame,
+} from './helpers';
 
 export enum PlayerType {
   CPU,
@@ -121,10 +128,7 @@ const gameSlice = createSlice({
     },
     selectGridPosition(state, action: PayloadAction<ColumnNum>) {
       const columnNum = action.payload;
-      const color =
-        state.activePlayer.color === PlayerColor.RED
-          ? PlayerColor.YELLOW
-          : PlayerColor.RED;
+      const color = getPlayerColor(state);
 
       const selectedColumn = state.gridMap[columnNum];
       const lastPosition = selectedColumn.lastPosition;
@@ -160,14 +164,37 @@ const gameSlice = createSlice({
       state.endGame = true;
     },
     checkForGameWinner(state) {
-      if (state.gridMap) {
-        // const result = analyzeGrid(gridMap, player1, player2);
-      } else if (
-        state.player1.currentScore > 49 ||
-        state.player2.currentScore > 49
-      ) {
-        state.endGame = true;
-      }
+      const result = findWinner(state.gridMap, getPlayerColor(state));
+      // console.log(
+      //   'state.gridMap[0].rows[5]: ',
+      //   state.gridMap[0].rows[5].selected
+      // );
+      // console.log(
+      //   'state.gridMap[1].rows[5]: ',
+      //   state.gridMap[1].rows[5].selected
+      // );
+      // console.log(
+      //   'state.gridMap[2].rows[5]: ',
+      //   state.gridMap[2].rows[5].selected
+      // );
+      // console.log(
+      //   'state.gridMap[3].rows[5]: ',
+      //   state.gridMap[3].rows[5].selected
+      // );
+      console.log(
+        `Is ${
+          state.activePlayer.name === PlayerName.PLAYER_ONE
+            ? 'player one'
+            : 'player two'
+        } the winner ?  ${result}`
+      );
+
+      // if (
+      //   state.player1.currentScore > 49 ||
+      //   state.player2.currentScore > 49
+      // ) {
+      //   state.endGame = true;
+      // }
     },
     restartGame(state) {
       state.gameWinner = undefined;

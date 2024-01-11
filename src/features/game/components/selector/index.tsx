@@ -1,5 +1,10 @@
-import React from 'react';
-import { ColumnNum, PlayerColor, toggleActivePlayer } from '../../game-slice';
+import React, { useEffect } from 'react';
+import {
+  ColumnNum,
+  PlayerColor,
+  checkForGameWinner,
+  toggleActivePlayer,
+} from '../../game-slice';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { selectColumn, selectGridPosition } from '../../game-slice';
 import MarkerRedSvg from '../../../../assets/images/marker-red.svg';
@@ -16,6 +21,10 @@ const Selector: React.FC = () => {
   if (activePlayer.color === PlayerColor.YELLOW) {
     markerSrc = MarkerYellowSvg;
   }
+
+  useEffect(() => {
+    dispatch(checkForGameWinner());
+  }, [gridMap, dispatch]);
 
   return (
     <div className="absolute -top-11 left-0 right-0 h-[43px] w-full flex justify-center">

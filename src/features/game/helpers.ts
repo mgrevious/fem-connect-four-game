@@ -1,4 +1,10 @@
-import { GamePieceState, GameState, Player } from './game-slice';
+import {
+  ColumnNum,
+  GamePieceState,
+  GameState,
+  Player,
+  PlayerColor,
+} from './game-slice';
 
 export type RowNum = 0 | 1 | 2 | 3 | 4 | 5;
 export interface ColumnData {
@@ -32,4 +38,86 @@ export function resetGame(state: GameState, player1: Player, player2: Player) {
   state.selectedColumn = 0;
 }
 
-// export function analyzeGrid(gridMap: )
+export function findWinner(grid: ColumnData[], color: PlayerColor) {
+  const COLUMN_COUNT = 7;
+  const ROW_COUNT = 6;
+  // Check valid horizontal locations for win
+  for (let c: ColumnNum = 0; c < COLUMN_COUNT - 3; c++) {
+    for (let r: RowNum = 0; r < ROW_COUNT; r++) {
+      console.log(color);
+
+      if (
+        grid[c].rows[r].selected &&
+        grid[c].rows[r].color === color &&
+        grid[c + 1].rows[r].selected &&
+        grid[c + 1].rows[r].color === color &&
+        grid[c + 2].rows[r].selected &&
+        grid[c + 2].rows[r].color === color &&
+        grid[c + 3].rows[r].selected &&
+        grid[c + 3].rows[r].color === color
+      ) {
+        return true;
+      }
+    }
+  }
+
+  // Check valid vertical locations for win
+  // for (let c: ColumnNum = 0; c < COLUMN_COUNT; c++) {
+  //   for (let r: RowNum = 0; r < ROW_COUNT - 3; r++) {
+  //     if (
+  //       grid[c].rows[r].selected &&
+  //       grid[c].rows[r].color === color &&
+  //       grid[c].rows[r + 1].selected &&
+  //       grid[c].rows[r + 1].color === color &&
+  //       grid[c].rows[r + 2].selected &&
+  //       grid[c].rows[r + 2].color === color &&
+  //       grid[c].rows[r + 3].selected &&
+  //       grid[c].rows[r + 3].color === color
+  //     )
+  //       return true;
+  //   }
+  // }
+
+  // Check valid positive diagonal locations for win
+  // for (let c: ColumnNum = 0; c < COLUMN_COUNT - 3; c++) {
+  //   for (let r: RowNum = 0; r < ROW_COUNT - 3; r++) {
+  //     if (
+  //       grid[c].rows[r].selected &&
+  //       grid[c].rows[r].color === color &&
+  //       grid[c + 1].rows[r + 1].selected &&
+  //       grid[c + 1].rows[r + 1].color === color &&
+  //       grid[c + 2].rows[r + 2].selected &&
+  //       grid[c + 2].rows[r + 2].color === color &&
+  //       grid[c + 3].rows[r + 3].selected &&
+  //       grid[c + 3].rows[r + 3].color === color
+  //     ) {
+  //       return true;
+  //     }
+  //   }
+  // }
+
+  // check valid negative diagonal locations for win
+  // for (let c: ColumnNum = 0; c < COLUMN_COUNT - 3; c++) {
+  //   for (let r: RowNum = 3; r < ROW_COUNT; r++) {
+  //     if (
+  //       grid[c].rows[r].selected &&
+  //       grid[c].rows[r].color === color &&
+  //       grid[c - 1].rows[r + 1].selected &&
+  //       grid[c - 1].rows[r + 1].color === color &&
+  //       grid[c - 2].rows[r + 2].selected &&
+  //       grid[c - 2].rows[r + 2].color === color &&
+  //       grid[c - 3].rows[r + 3].selected &&
+  //       grid[c - 3].rows[r + 3].color === color
+  //     ) {
+  //       return true;
+  //     }
+  //   }
+  // }
+  return false;
+}
+
+export function getPlayerColor(state: GameState) {
+  return state.activePlayer.color === PlayerColor.RED
+    ? PlayerColor.YELLOW
+    : PlayerColor.RED;
+}
