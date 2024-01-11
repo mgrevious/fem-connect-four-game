@@ -1,4 +1,9 @@
-import { pauseGame } from '../../game-slice';
+import {
+  AppView,
+  pauseGame,
+  restartGame,
+  selectAppView,
+} from '../../game-slice';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import appStyles from '../../../../app.module.css';
 
@@ -29,11 +34,17 @@ const InGameMenu = () => {
           continue game
         </button>
         <button
+          onClick={() => {
+            dispatch(restartGame());
+          }}
           className={`${appStyles.border} font-bold text-2xl uppercase active:translate-y-1 active:transition-transform mb-4 py-4 w-full bg-white`}
         >
           restart
         </button>
         <button
+          onClick={() => {
+            dispatch(selectAppView(AppView.MAIN_MENU));
+          }}
           className={`${appStyles.border} font-bold text-2xl uppercase active:translate-y-1 active:transition-transform mb-4 py-4 w-full bg-coral text-white`}
         >
           quit game

@@ -1,7 +1,7 @@
 import React, { MutableRefObject } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import appStyles from '../../../../app.module.css';
-import { PlayerName, restartGame, toggleActivePlayer } from '../../game-slice';
+import { PlayerName, restartGame } from '../../game-slice';
 import { CountdownApi } from 'react-countdown';
 
 interface Props {
@@ -27,7 +27,6 @@ const WinnerDisplay: React.FC<Props> = ({ countdownApi }) => {
             if (countdownApi.current) {
               countdownApi.current.start();
               dispatch(restartGame());
-              toggleActivePlayer();
             }
           }}
           className="bg-primary-dark text-white font-bold rounded-full uppercase text-base py-2 px-6 hover:bg-primary"

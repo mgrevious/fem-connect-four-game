@@ -3,12 +3,21 @@ import Grid from './components/Grid';
 import PlayerScore from './components/player-score';
 import Header from './components/Header';
 import InGameMenu from './components/ingame-menu';
+import StartMenu from './pages/start-menu';
+import { AppView } from './game-slice';
+import GameRules from './pages/game-rules';
 
 const Game = () => {
-  const { player1, player2 } = useAppSelector((state) => state.game);
-  return (
-    <>
-      <main className="w-full">
+  const { player1, player2, currentView } = useAppSelector(
+    (state) => state.game
+  );
+
+  let renderedView = null;
+  if (currentView === AppView.GAME_RULES) {
+    renderedView = <GameRules />;
+  } else if (currentView === AppView.GAME) {
+    renderedView = (
+      <>
         <div className="flex flex-col justify-center items-center">
           <div className="w-[635px]">
             <Header />
@@ -20,9 +29,17 @@ const Game = () => {
           </div>
         </div>
         <InGameMenu />
-      </main>
-    </>
-  );
+      </>
+    );
+  } else {
+    renderedView = (
+      <div className="bg-primary-dark">
+        <StartMenu />
+      </div>
+    );
+  }
+
+  return <main className="w-full">{renderedView}</main>;
 };
 
 export default Game;
