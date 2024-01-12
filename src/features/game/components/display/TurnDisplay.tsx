@@ -41,7 +41,6 @@ const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
       setRestartKey(1);
     }
   }, [timerReset]);
-  const show = false;
 
   return (
     <div
@@ -61,7 +60,7 @@ const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
           )}
         </p>
         <p className="text-center text-[56px] leading-[56px]">
-          {show ? (
+          {showCountdown ? (
             <Countdown
               key={restartKey}
               ref={(countdown) => {

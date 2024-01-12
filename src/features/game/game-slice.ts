@@ -41,7 +41,11 @@ export type Player = {
 
 export type ColumnNum = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
-export type GamePieceState = { selected: boolean; color?: PlayerColor };
+export type GamePieceState = {
+  selected: boolean;
+  color?: PlayerColor;
+  highlight?: boolean;
+};
 export interface GameState {
   player1: Player;
   player2: Player;
@@ -149,10 +153,8 @@ const gameSlice = createSlice({
       // use columnId to search gridMap
       // if gridMap key contains column, get available row and set it
       state.selectedColumn = action.payload;
-      // console.log('result', result);
     },
     autoSelectWinner(state) {
-      // debugger;
       if (state.activePlayer.name === PlayerName.PLAYER_ONE) {
         state.player2.currentScore = (state.player2.currentScore + 1) as Score;
         state.gameWinner = state.player2.name;
@@ -184,7 +186,6 @@ const gameSlice = createSlice({
       }
     },
     restartGame(state) {
-      debugger;
       state.gameWinner = undefined;
       state.endGame = false;
       state.gridMap = createGrid();
