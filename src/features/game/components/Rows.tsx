@@ -42,36 +42,6 @@ const Row: React.FC<Props> = ({ data, columnIndex }) => {
       );
     }
   });
-
-  // return (
-  //   gridMap &&
-  //   gridRows.map((rowId, index) => {
-  //     const col = gridMap.get(column);
-  //     const gamePieceState = col?.rows.get(rowId);
-  //     if (gamePieceState?.selected) {
-  //       // debugger;
-  //       return (
-  //         <div
-  //           id={`${column}${index + 1}`}
-  //           key={index}
-  //           className={`${styles.gamePiece} ${
-  //             gamePieceState.color === PlayerColor.RED
-  //               ? styles.red
-  //               : styles.yellow
-  //           } ${otherClasses} opacity-100`}
-  //         ></div>
-  //       );
-  //     }
-
-  //     return (
-  //       <div
-  //         id={`${column}${index + 1}`}
-  //         key={index}
-  //         className={`${styles.gamePiece} ${otherClasses}`}
-  //       ></div>
-  //     );
-  //   })
-  // );
 };
 
 export default Row;
