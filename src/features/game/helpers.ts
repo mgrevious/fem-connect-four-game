@@ -44,8 +44,6 @@ export function findWinner(grid: ColumnData[], color: PlayerColor) {
   // Check valid horizontal locations for win
   for (let c: ColumnNum = 0; c < COLUMN_COUNT - 3; c++) {
     for (let r: RowNum = 0; r < ROW_COUNT; r++) {
-      console.log(color);
-
       if (
         grid[c].rows[r].selected &&
         grid[c].rows[r].color === color &&
@@ -114,10 +112,4 @@ export function findWinner(grid: ColumnData[], color: PlayerColor) {
   //   }
   // }
   return false;
-}
-
-export function getPlayerColor(state: GameState) {
-  return state.activePlayer.color === PlayerColor.RED
-    ? PlayerColor.YELLOW
-    : PlayerColor.RED;
 }

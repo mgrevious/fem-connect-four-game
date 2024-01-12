@@ -6,7 +6,6 @@ import {
   RowNum,
   createGrid,
   findWinner,
-  getPlayerColor,
   resetGame,
 } from './helpers';
 
@@ -128,7 +127,7 @@ const gameSlice = createSlice({
     },
     selectGridPosition(state, action: PayloadAction<ColumnNum>) {
       const columnNum = action.payload;
-      const color = getPlayerColor(state);
+      const color = state.activePlayer.color;
 
       const selectedColumn = state.gridMap[columnNum];
       const lastPosition = selectedColumn.lastPosition;
@@ -164,39 +163,28 @@ const gameSlice = createSlice({
       state.endGame = true;
     },
     checkForGameWinner(state) {
-      const result = findWinner(state.gridMap, getPlayerColor(state));
-      // console.log(
-      //   'state.gridMap[0].rows[5]: ',
-      //   state.gridMap[0].rows[5].selected
-      // );
-      // console.log(
-      //   'state.gridMap[1].rows[5]: ',
-      //   state.gridMap[1].rows[5].selected
-      // );
-      // console.log(
-      //   'state.gridMap[2].rows[5]: ',
-      //   state.gridMap[2].rows[5].selected
-      // );
-      // console.log(
-      //   'state.gridMap[3].rows[5]: ',
-      //   state.gridMap[3].rows[5].selected
-      // );
-      console.log(
-        `Is ${
-          state.activePlayer.name === PlayerName.PLAYER_ONE
-            ? 'player one'
-            : 'player two'
-        } the winner ?  ${result}`
-      );
-
-      // if (
-      //   state.player1.currentScore > 49 ||
-      //   state.player2.currentScore > 49
-      // ) {
-      //   state.endGame = true;
-      // }
+      const winnerFound = findWinner(state.gridMap, state.activePlayer.color);
+      if (winnerFound) {
+        state.gameWinner = state.activePlayer.name;
+        state.endGame = true;
+        if (state.activePlayer.name === PlayerName.PLAYER_ONE) {
+          state.player1.currentScore = (state.player1.currentScore +
+            1) as Score;
+        } else {
+          state.player2.currentScore = (state.player2.currentScore +
+            1) as Score;
+        }
+      } else {
+        if (state.activePlayer.name === PlayerName.PLAYER_ONE) {
+          state.activePlayer = state.player2;
+        } else {
+          state.activePlayer = state.player1;
+        }
+        state.timerReset = true;
+      }
     },
     restartGame(state) {
+      debugger;
       state.gameWinner = undefined;
       state.endGame = false;
       state.gridMap = createGrid();
