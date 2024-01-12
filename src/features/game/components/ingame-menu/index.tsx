@@ -3,6 +3,7 @@ import {
   pauseGame,
   restartGame,
   selectAppView,
+  setRemainingTime,
 } from '../../game-slice';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import appStyles from '../../../../app.module.css';
@@ -36,6 +37,8 @@ const InGameMenu = () => {
         <button
           onClick={() => {
             dispatch(restartGame());
+            dispatch(setRemainingTime(30 * 1000));
+            dispatch(pauseGame(false));
           }}
           className={`${appStyles.border} font-bold text-2xl uppercase active:translate-y-1 active:transition-transform mb-4 py-4 w-full bg-white`}
         >

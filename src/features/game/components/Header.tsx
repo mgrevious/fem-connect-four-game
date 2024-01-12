@@ -1,7 +1,7 @@
 import React from 'react';
 import MenuSvg from '../../../assets/images/logo.svg';
 import { useAppDispatch } from '../../../app/hooks';
-import { pauseGame } from '../game-slice';
+import { pauseGame, restartGame, setRemainingTime } from '../game-slice';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -22,7 +22,14 @@ const Header: React.FC = () => {
           <img src={MenuSvg} alt="Menu Icon" />
         </div>
         <div>
-          <button className="py-[12px] px-6 text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90">
+          <button
+            onClick={() => {
+              dispatch(restartGame());
+              dispatch(setRemainingTime(30 * 1000));
+              dispatch(pauseGame(false));
+            }}
+            className="py-[12px] px-6 text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90"
+          >
             restart
           </button>
         </div>

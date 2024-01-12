@@ -6,6 +6,8 @@ import {
   toggleActivePlayer,
   autoSelectWinner,
   PlayerColor,
+  setTimerReset,
+  setRemainingTime,
 } from '../../game-slice';
 import styles from './display.module.css';
 
@@ -17,9 +19,14 @@ const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
   const dispatch = useAppDispatch();
   const [restartKey, setRestartKey] = useState(1);
   const [showCountdown, setShowCountdown] = useState(true);
-  const [remainingTime, setRemainingTime] = useState(30);
-  const { activePlayer, gameWinner, endGame, isPaused, timerReset } =
-    useAppSelector((state) => state.game);
+  const {
+    activePlayer,
+    gameWinner,
+    endGame,
+    isPaused,
+    timerReset,
+    remainingTime,
+  } = useAppSelector((state) => state.game);
 
   useEffect(() => {
     if (countdownApi.current) {
@@ -39,8 +46,9 @@ const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
   useEffect(() => {
     if (timerReset) {
       setRestartKey(1);
+      dispatch(setTimerReset(false));
     }
-  }, [timerReset]);
+  }, [timerReset, dispatch]);
 
   return (
     <div
@@ -69,12 +77,12 @@ const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
                 }
               }}
               autoStart={false}
-              date={Date.now() + remainingTime * 1000}
+              date={Date.now() + remainingTime}
               renderer={({ seconds }) => {
                 return seconds;
               }}
-              onPause={({ seconds }) => {
-                setRemainingTime(seconds);
+              onPause={({ total }) => {
+                setRemainingTime(total);
               }}
               onComplete={() => {
                 // if there is no winner, auto select winner

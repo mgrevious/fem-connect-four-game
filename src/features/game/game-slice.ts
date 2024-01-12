@@ -59,6 +59,7 @@ export interface GameState {
   selectedColumn: ColumnNum;
   timerReset: boolean;
   currentView: AppView;
+  remainingTime: number;
 }
 
 const player1: Player = {
@@ -87,6 +88,7 @@ const initialState: GameState = {
   timerReset: false,
   currentView: AppView.MAIN_MENU,
   gridMap: createGrid(),
+  remainingTime: 30 * 1000,
 };
 
 const gameSlice = createSlice({
@@ -186,16 +188,27 @@ const gameSlice = createSlice({
       }
     },
     restartGame(state) {
-      state.gameWinner = undefined;
       state.endGame = false;
       state.gridMap = createGrid();
-      if (state.startingPlayer.name === PlayerName.PLAYER_ONE) {
-        state.activePlayer = state.player2;
-        state.startingPlayer = state.player2;
-      } else {
-        state.startingPlayer = state.player1;
-        state.activePlayer = state.player1;
+      state.timerReset = true;
+      if (state.gameWinner !== undefined) {
+        if (state.startingPlayer.name === PlayerName.PLAYER_ONE) {
+          state.activePlayer = state.player2;
+          state.startingPlayer = state.player2;
+        } else {
+          state.startingPlayer = state.player1;
+          state.activePlayer = state.player1;
+        }
+        state.gameWinner = undefined;
       }
+      state.player1.currentScore = 0;
+      state.player2.currentScore = 0;
+    },
+    setTimerReset(state, action: PayloadAction<boolean>) {
+      state.timerReset = action.payload;
+    },
+    setRemainingTime(state, action: PayloadAction<number>) {
+      state.remainingTime = action.payload;
     },
   },
 });
@@ -214,4 +227,6 @@ export const {
   restartGame,
   pauseGame,
   selectAppView,
+  setTimerReset,
+  setRemainingTime,
 } = gameSlice.actions;
