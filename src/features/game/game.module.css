@@ -14,6 +14,19 @@
   width: 632px;
 }
 
+@keyframes animatePiece {
+  from {
+    top: 0;
+  }
+  to {
+    top: 100px;
+  }
+}
+
+.animateGamePiece {
+  animation: animatePiece 500ms ease-out;
+}
+
 .gamePiece {
   &.red {
     background-color: transparent;

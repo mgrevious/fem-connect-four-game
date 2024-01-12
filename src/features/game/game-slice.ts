@@ -45,6 +45,7 @@ export type GamePieceState = {
   selected: boolean;
   color?: PlayerColor;
   highlight?: boolean;
+  active: boolean;
 };
 export interface GameState {
   player1: Player;
@@ -60,6 +61,7 @@ export interface GameState {
   timerReset: boolean;
   currentView: AppView;
   remainingTime: number;
+  isColumnSelected: boolean;
 }
 
 const player1: Player = {
@@ -89,6 +91,7 @@ const initialState: GameState = {
   currentView: AppView.MAIN_MENU,
   gridMap: createGrid(),
   remainingTime: 30 * 1000,
+  isColumnSelected: false,
 };
 
 const gameSlice = createSlice({
@@ -134,6 +137,15 @@ const gameSlice = createSlice({
     selectGridPosition(state, action: PayloadAction<ColumnNum>) {
       const columnNum = action.payload;
       const color = state.activePlayer.color;
+      state.isColumnSelected = true;
+
+      state.gridMap.forEach((el) => {
+        el.rows.forEach((gamePieceState) => {
+          if (gamePieceState.active) {
+            gamePieceState.active = false;
+          }
+        });
+      });
 
       const selectedColumn = state.gridMap[columnNum];
       const lastPosition = selectedColumn.lastPosition;
@@ -142,11 +154,13 @@ const gameSlice = createSlice({
         if (lastPosition === undefined) {
           selectedColumn.rows[5].selected = true;
           selectedColumn.rows[5].color = color;
+          selectedColumn.rows[5].active = true;
           selectedColumn.lastPosition = 5;
         } else if (lastPosition && lastPosition > 0) {
           const row = (lastPosition - 1) as RowNum;
           selectedColumn.rows[row].selected = true;
           selectedColumn.rows[row].color = color;
+          selectedColumn.rows[row].active = true;
           selectedColumn.lastPosition = row;
         }
       }
@@ -210,6 +224,9 @@ const gameSlice = createSlice({
     setRemainingTime(state, action: PayloadAction<number>) {
       state.remainingTime = action.payload;
     },
+    setIsColumnSelected(state, action: PayloadAction<boolean>) {
+      state.isColumnSelected = action.payload;
+    },
   },
 });
 
@@ -229,4 +246,5 @@ export const {
   selectAppView,
   setTimerReset,
   setRemainingTime,
+  setIsColumnSelected,
 } = gameSlice.actions;

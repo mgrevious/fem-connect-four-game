@@ -7,16 +7,34 @@ let value = 1;
 interface Props {
   columnIndex: ColumnNum;
   data: GamePieceState[];
+  showGamePiece: boolean;
 }
 
-const Row: React.FC<Props> = ({ data, columnIndex }) => {
+const Row: React.FC<Props> = ({ data, columnIndex, showGamePiece }) => {
+  console.log('showGamePiece: ', showGamePiece);
   value = value + 1;
   const otherClasses =
     'w-[71px] h-[71px] flex items-center justify-center mb-[17px] opacity-100 relative';
   const { gameWinner } = useAppSelector((state) => state.game);
 
   return data.map((gamePieceState, index) => {
-    if (gamePieceState?.selected) {
+    if (gamePieceState?.active) {
+      return (
+        <div
+          id={`${columnIndex}${index + 1}`}
+          key={index}
+          className={`${styles.gamePiece} ${
+            gamePieceState.color === PlayerColor.RED
+              ? styles.red
+              : styles.yellow
+          } ${otherClasses} ${showGamePiece ? 'visible' : 'invisible'}`}
+        >
+          {gameWinner !== undefined && gamePieceState.highlight ? (
+            <div className="w-[34px] h-[34px] border-[6px] border-white absolute top-[18px] left-[18px] rounded-full"></div>
+          ) : null}
+        </div>
+      );
+    } else if (gamePieceState?.selected) {
       return (
         <div
           id={`${columnIndex}${index + 1}`}
@@ -32,15 +50,14 @@ const Row: React.FC<Props> = ({ data, columnIndex }) => {
           ) : null}
         </div>
       );
-    } else {
-      return (
-        <div
-          id={`${columnIndex}${index + 1}`}
-          key={index}
-          className={`${styles.gamePiece} ${otherClasses}`}
-        ></div>
-      );
     }
+    return (
+      <div
+        id={`${columnIndex}${index + 1}`}
+        key={index}
+        className={`${styles.gamePiece} ${otherClasses}`}
+      ></div>
+    );
   });
 };
 
