@@ -6,13 +6,16 @@ import { selectAppView, startGame } from '../game-slice';
 import { AppView } from '../helpers';
 
 import globalStyles from '../../../app.module.css';
+import { getFadeInContainer } from '../styled-helpers';
+
+const FadeInContainer = getFadeInContainer();
 
 const StartMenu = () => {
   const dispatch = useAppDispatch();
   return (
     <div className="container mx-auto flex items-center justify-center min-h-screen">
       <div className="w-[486px] h-[451px] flex justify-center">
-        <div className="flex flex-col justify-end items-center p-[37px] w-[480px] h-[435px] bg-primary border-l-[3px] border-t-[3px] border-r-[3px] border-b-[13px] border-black rounded-[40px]">
+        <FadeInContainer className="flex flex-col justify-end items-center p-[37px] w-[480px] h-[435px] bg-primary border-l-[3px] border-t-[3px] border-r-[3px] border-b-[13px] border-black rounded-[40px]">
           <div className="mb-[70px] mt-[30px]">
             <div className="flex justify-between gap-1">
               <img
@@ -64,7 +67,7 @@ const StartMenu = () => {
               <span>game rules</span>
             </span>
           </button>
-        </div>
+        </FadeInContainer>
       </div>
     </div>
   );

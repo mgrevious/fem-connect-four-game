@@ -1,22 +1,10 @@
-import styled, { keyframes } from 'styled-components';
 import { useAppDispatch } from '../../../app/hooks';
 import CheckmarkSvg from '../../../assets/images/icon-check.svg';
 import { selectAppView } from '../game-slice';
 import { AppView } from '../helpers';
+import { getFadeInContainer } from '../styled-helpers';
 
-const fadeIn = keyframes`
-from {
-  opacity: 0;
-}
-to {
-  opacity: 1;
-}
-
-`;
-
-const RulesCard = styled.div`
-  animation: ${fadeIn} forwards ease-in 1s;
-`;
+const FadeInContainer = getFadeInContainer();
 
 const GameRules = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +12,7 @@ const GameRules = () => {
   return (
     <div className="container mx-auto flex items-center justify-center min-h-screen">
       <div className="flex justify-center">
-        <RulesCard className="relative flex flex-col justify-end py-12 px-9 w-[494px] bg-white border-l-[3px] border-t-[3px] border-r-[3px] border-b-[13px] border-black rounded-[40px] opacity-0">
+        <FadeInContainer className="relative flex flex-col justify-end py-12 px-9 w-[494px] bg-white border-l-[3px] border-t-[3px] border-r-[3px] border-b-[13px] border-black rounded-[40px] opacity-0">
           <h1 className="uppercase mb-7 font-bold text-[56px] text-center">
             rules
           </h1>
@@ -73,7 +61,7 @@ const GameRules = () => {
               <img src={CheckmarkSvg} alt="red check mark icon" />
             </button>
           </div>
-        </RulesCard>
+        </FadeInContainer>
       </div>
     </div>
   );
