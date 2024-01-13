@@ -7,6 +7,8 @@ import Row from './Row';
 import styles from '../game.module.css';
 import { ColumnNum } from '../game-slice';
 
+const rowClass = 'flex flex-col w-[71px] mr-[17px] opacity-80';
+
 const Grid = () => {
   const [counter, setCounter] = useState(0);
   const [showSelectedGamePiece, setShowSelectedGamePiece] = useState(false);
@@ -16,15 +18,12 @@ const Grid = () => {
     setShowSelectedGamePiece(value);
   }, []);
 
-  console.log(showSelectedGamePiece);
   useEffect(() => {
     if (counter < 3) {
       const updatedCounter = counter + 1;
       setCounter(updatedCounter);
     }
   }, [counter]);
-
-  const rowClass = 'flex flex-col w-[71px] mr-[17px] opacity-80';
 
   return (
     <div className="w-full">

@@ -62,6 +62,7 @@ export interface GameState {
   currentView: AppView;
   remainingTime: number;
   isColumnSelected: boolean;
+  highestPositionList: (RowNum | undefined)[];
 }
 
 const player1: Player = {
@@ -92,6 +93,7 @@ const initialState: GameState = {
   gridMap: createGrid(),
   remainingTime: 30 * 1000,
   isColumnSelected: false,
+  highestPositionList: new Array(7).fill(undefined),
 };
 
 const gameSlice = createSlice({
@@ -147,22 +149,26 @@ const gameSlice = createSlice({
         });
       });
 
-      const selectedColumn = state.gridMap[columnNum];
-      const lastPosition = selectedColumn.lastPosition;
+      const activeColumn = state.gridMap[columnNum];
+      const lastPosition = activeColumn.lastPosition;
 
       if (columnNum < state.gridMap.length && columnNum >= 0) {
         if (lastPosition === undefined) {
-          selectedColumn.rows[5].selected = true;
-          selectedColumn.rows[5].color = color;
-          selectedColumn.rows[5].active = true;
-          selectedColumn.lastPosition = 5;
+          activeColumn.rows[5].selected = true;
+          activeColumn.rows[5].color = color;
+          activeColumn.rows[5].active = true;
+          activeColumn.lastPosition = 5;
         } else if (lastPosition && lastPosition > 0) {
           const row = (lastPosition - 1) as RowNum;
-          selectedColumn.rows[row].selected = true;
-          selectedColumn.rows[row].color = color;
-          selectedColumn.rows[row].active = true;
-          selectedColumn.lastPosition = row;
+          activeColumn.rows[row].selected = true;
+          activeColumn.rows[row].color = color;
+          activeColumn.rows[row].active = true;
+          activeColumn.lastPosition = row;
         }
+
+        state.highestPositionList[columnNum] = (
+          lastPosition ? lastPosition - 1 : 5
+        ) as RowNum;
       }
     },
     selectColumn(state, action: PayloadAction<ColumnNum>) {

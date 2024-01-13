@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
   ColumnNum,
   PlayerColor,
@@ -16,50 +16,72 @@ interface Props {
   setAnimationComplete: (value: boolean) => void;
 }
 
+const gridColumns: ColumnNum[] = [0, 1, 2, 3, 4, 5, 6];
+const gamePieceOffsets = [17, 105, 193, 281, 369, 457];
+
 const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
   const gamePieceEl = useRef<HTMLDivElement | null>(null);
-  const { activePlayer, selectedColumn, endGame, gridMap, isColumnSelected } =
-    useAppSelector((state) => state.game);
+  const {
+    activePlayer,
+    selectedColumn,
+    endGame,
+    gridMap,
+    isColumnSelected,
+    highestPositionList,
+  } = useAppSelector((state) => state.game);
   const dispatch = useAppDispatch();
-  const gridColumns: ColumnNum[] = [0, 1, 2, 3, 4, 5, 6];
-
   const gamePieceAnimation = useRef<Animation | null>(null);
-
-  // if (gamePieceAnimation) {
-  //   gamePieceAnimation.onfinish = () => {
-  //     debugger;
-  //     setAnimationComplete();
-  //   };
-  // }
+  const getAnimationOffset = useCallback(() => {
+    const rowNum = highestPositionList[selectedColumn];
+    return rowNum !== undefined ? gamePieceOffsets[rowNum] : 508;
+  }, [highestPositionList, selectedColumn]);
 
   useEffect(() => {
+    const rowNum = highestPositionList[selectedColumn];
     let animation = gamePieceAnimation.current;
     animation = new Animation(
       new KeyframeEffect(
         gamePieceEl.current,
         [
           {
-            top: '80px',
+            top: '60px',
           },
-          { top: '508px' },
+          {
+            top: `${getAnimationOffset()}px`,
+          },
         ],
         {
           duration: 600,
           easing: 'cubic-bezier(0.32, 0, 0.67, 0)',
-          fill: 'forwards',
         }
       )
     );
-    if (animation && isColumnSelected) {
+    console.log('ROW NUM: ', rowNum, ', ARRAY: ', highestPositionList[0]);
+    if (animation && isColumnSelected && rowNum !== undefined && rowNum > 0) {
       animation.play();
       animation.onfinish = () => {
-        // gamePieceEl.current?.className
-        // debugger;
         dispatch(setIsColumnSelected(false));
         setAnimationComplete(true);
+        setTimeout(() => {
+          dispatch(checkForGameWinner());
+        }, 200);
       };
+    } else if (rowNum !== undefined && rowNum === 0) {
+      // no animation for gamepiece at row 0
+      dispatch(setIsColumnSelected(false));
+      setAnimationComplete(true);
+      setTimeout(() => {
+        dispatch(checkForGameWinner());
+      }, 200);
     }
-  }, [isColumnSelected, setAnimationComplete, dispatch]);
+  }, [
+    isColumnSelected,
+    setAnimationComplete,
+    dispatch,
+    getAnimationOffset,
+    highestPositionList,
+    selectedColumn,
+  ]);
 
   let markerSrc = MarkerRedSvg;
   if (activePlayer.color === PlayerColor.YELLOW) {
@@ -81,9 +103,9 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
                   ref={gamePieceEl}
                   className={`${styles.gamePiece} ${
                     activePlayer.color === PlayerColor.RED
-                      ? styles.yellow
-                      : styles.red
-                  } w-[71px] h-[75px] flex items-center justify-center mb-[17px] ${
+                      ? styles.red
+                      : styles.yellow
+                  } w-[71px] h-[71px] flex items-center justify-center mb-[17px] ${
                     isColumnSelected ? 'visible' : 'invisible'
                   } absolute left-0 top-10`}
                 ></div>
@@ -94,7 +116,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
                   onClick={() => {
                     setAnimationComplete(false);
                     dispatch(selectGridPosition(column));
-                    dispatch(checkForGameWinner());
+                    // dispatch(checkForGameWinner());
                   }}
                 >
                   <img src={markerSrc} alt="Marker" />
@@ -116,7 +138,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
                   setAnimationComplete(false);
                   dispatch(selectColumn(column));
                   dispatch(selectGridPosition(column));
-                  dispatch(checkForGameWinner());
+                  // dispatch(checkForGameWinner());
                 }}
               >
                 <img src={markerSrc} alt="Marker" />

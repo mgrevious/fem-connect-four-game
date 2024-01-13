@@ -14,17 +14,26 @@
   width: 632px;
 }
 
-@keyframes animatePiece {
-  from {
-    top: 0;
+@keyframes bounce {
+  20% {
+    transform: translateY(-20%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
   }
-  to {
-    top: 100px;
+  80% {
+    transform: translateY(-10%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 }
 
-.animateGamePiece {
-  animation: animatePiece 500ms ease-out;
+.bounce {
+  animation: bounce 300ms ease-out forwards;
+  animation-iteration-count: 1;
 }
 
 .gamePiece {
