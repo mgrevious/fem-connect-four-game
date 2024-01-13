@@ -1,11 +1,11 @@
-import CounterRedSmallSvg from '../../../../assets/images/counter-red-small.svg';
-import CounterYellowSmallSvg from '../../../../assets/images/counter-yellow-small.svg';
-import PlayerVsPlayerSvg from '../../../../assets/images/player-vs-player.svg';
-import { useAppDispatch } from '../../../../app/hooks';
+import CounterRedSmallSvg from '../../../assets/images/counter-red-small.svg';
+import CounterYellowSmallSvg from '../../../assets/images/counter-yellow-small.svg';
+import PlayerVsPlayerSvg from '../../../assets/images/player-vs-player.svg';
+import { useAppDispatch } from '../../../app/hooks';
+import { selectAppView, startGame } from '../game-slice';
+import { AppView } from '../helpers';
 
-import { AppView, selectAppView, startGame } from '../../game-slice';
-
-import globalStyles from '../../../../app.module.css';
+import globalStyles from '../../../app.module.css';
 
 const StartMenu = () => {
   const dispatch = useAppDispatch();

@@ -1,6 +1,9 @@
 import { useAppSelector } from '../../../app/hooks';
-import { PlayerColor, ColumnNum, GamePieceState } from '../game-slice';
+import { ColumnNum, GamePieceState } from '../game.types';
+import { PlayerColor } from '../helpers';
+
 import styles from '../game.module.css';
+
 interface Props {
   columnIndex: ColumnNum;
   data: GamePieceState[];

@@ -1,8 +1,10 @@
 import React, { MutableRefObject } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import appStyles from '../../../../app.module.css';
-import { PlayerName, restartGame } from '../../game-slice';
+import { continueGame } from '../../game-slice';
 import { CountdownApi } from 'react-countdown';
+import { PlayerName } from '../../helpers';
+
+import appStyles from '../../../../app.module.css';
 
 interface Props {
   countdownApi: MutableRefObject<CountdownApi | null>;
@@ -26,7 +28,7 @@ const WinnerDisplay: React.FC<Props> = ({ countdownApi }) => {
           onClick={() => {
             if (countdownApi.current) {
               countdownApi.current.start();
-              dispatch(restartGame());
+              dispatch(continueGame());
             }
           }}
           className="bg-primary-dark text-white font-bold rounded-full uppercase text-base py-2 px-6 hover:bg-primary"

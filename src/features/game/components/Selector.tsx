@@ -1,16 +1,17 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import {
-  ColumnNum,
-  PlayerColor,
   checkForGameWinner,
   setIsColumnSelected,
-} from '../../game-slice';
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { selectColumn, selectGridPosition } from '../../game-slice';
-import MarkerRedSvg from '../../../../assets/images/marker-red.svg';
-import MarkerYellowSvg from '../../../../assets/images/marker-yellow.svg';
+  selectColumn,
+  selectGridPosition,
+} from '../game-slice';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import MarkerRedSvg from '../../../assets/images/marker-red.svg';
+import MarkerYellowSvg from '../../../assets/images/marker-yellow.svg';
+import { PlayerColor } from '../helpers';
+import { ColumnNum } from '../game.types';
 
-import styles from '../../game.module.css';
+import styles from '../game.module.css';
 
 interface Props {
   setAnimationComplete: (value: boolean) => void;
@@ -56,7 +57,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
         }
       )
     );
-    console.log('ROW NUM: ', rowNum, ', ARRAY: ', highestPositionList[0]);
+
     if (animation && isColumnSelected && rowNum !== undefined && rowNum > 0) {
       animation.play();
       animation.onfinish = () => {

@@ -1,69 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { CreateArrayWithLengthX, NumericRange } from '../../utils/number-range';
 import {
-  ColumnData,
+  AppView,
+  PlayerColor,
+  PlayerName,
+  PlayerType,
   RowNum,
   createGrid,
   findWinner,
   resetGame,
 } from './helpers';
-
-export enum PlayerType {
-  CPU,
-  HUMAN,
-}
-
-export enum PlayerColor {
-  RED,
-  YELLOW,
-}
-
-export enum PlayerName {
-  PLAYER_ONE,
-  PLAYER_TWO,
-}
-
-export enum AppView {
-  GAME,
-  MAIN_MENU,
-  GAME_RULES,
-}
-
-export type Score = NumericRange<CreateArrayWithLengthX<0>, 50>;
-
-export type Player = {
-  name: PlayerName;
-  color: PlayerColor;
-  currentScore: Score;
-  type: PlayerType.HUMAN | PlayerType.CPU;
-};
-
-export type ColumnNum = 0 | 1 | 2 | 3 | 4 | 5 | 6;
-
-export type GamePieceState = {
-  selected: boolean;
-  color?: PlayerColor;
-  highlight?: boolean;
-  active: boolean;
-};
-export interface GameState {
-  player1: Player;
-  player2: Player;
-  activePlayer: Player;
-  startingPlayer: Player;
-  gameWinner?: PlayerName;
-  isComplete: boolean;
-  isPaused: boolean;
-  endGame: boolean;
-  gridMap: ColumnData[]; // Map<ColumnId, ColumnState> | undefined;
-  selectedColumn: ColumnNum;
-  timerReset: boolean;
-  currentView: AppView;
-  remainingTime: number;
-  isColumnSelected: boolean;
-  highestPositionList: (RowNum | undefined)[];
-}
+import { ColumnNum, GameState, Player, Score } from './game.types';
 
 const player1: Player = {
   name: PlayerName.PLAYER_ONE,
@@ -207,7 +154,7 @@ const gameSlice = createSlice({
         state.timerReset = true;
       }
     },
-    restartGame(state) {
+    continueGame(state) {
       state.endGame = false;
       state.gridMap = createGrid();
       state.timerReset = true;
@@ -221,8 +168,9 @@ const gameSlice = createSlice({
         }
         state.gameWinner = undefined;
       }
-      state.player1.currentScore = 0;
-      state.player2.currentScore = 0;
+    },
+    restartGame(state) {
+      resetGame(state, player1, player2);
     },
     setTimerReset(state, action: PayloadAction<boolean>) {
       state.timerReset = action.payload;
@@ -240,6 +188,7 @@ export const gameReducer = gameSlice.reducer;
 
 export const {
   checkForGameWinner,
+  continueGame,
   endGame,
   toggleActivePlayer,
   startGame,

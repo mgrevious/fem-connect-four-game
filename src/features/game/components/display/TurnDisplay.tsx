@@ -2,13 +2,13 @@ import { MutableRefObject, useEffect, useState } from 'react';
 import Countdown, { CountdownApi } from 'react-countdown';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import {
-  PlayerName,
   toggleActivePlayer,
   autoSelectWinner,
-  PlayerColor,
   setTimerReset,
   setRemainingTime,
 } from '../../game-slice';
+import { PlayerColor, PlayerName } from '../../helpers';
+
 import styles from './display.module.css';
 
 interface Props {

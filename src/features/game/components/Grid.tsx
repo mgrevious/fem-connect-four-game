@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAppSelector } from '../../../app/hooks';
 import Display from './display';
-import Selector from './selector';
+import Selector from './Selector';
 import Row from './Row';
+import { ColumnNum } from '../game.types';
 
 import styles from '../game.module.css';
-import { ColumnNum } from '../game-slice';
 
 const rowClass = 'flex flex-col w-[71px] mr-[17px] opacity-80';
 
@@ -14,7 +14,6 @@ const Grid = () => {
   const [showSelectedGamePiece, setShowSelectedGamePiece] = useState(false);
   const { gameWinner, gridMap } = useAppSelector((state) => state.game);
   const setAnimationComplete = useCallback((value: boolean) => {
-    // debugger;
     setShowSelectedGamePiece(value);
   }, []);
 

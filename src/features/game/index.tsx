@@ -1,11 +1,26 @@
+import styled, { keyframes } from 'styled-components';
 import { useAppSelector } from '../../app/hooks';
 import Grid from './components/Grid';
-import PlayerScore from './components/player-score';
+import PlayerScore from './components/PlayScore';
 import Header from './components/Header';
-import InGameMenu from './components/ingame-menu';
-import StartMenu from './pages/start-menu';
-import { AppView } from './game-slice';
-import GameRules from './pages/game-rules';
+import InGameMenu from './components/InGameMenu';
+import StartMenu from './pages/StartMenu';
+import GameRules from './pages/GameRules';
+import { AppView } from './helpers';
+
+const fadeIn = keyframes`
+from {
+  opacity: 0;
+}
+to {
+  opacity: 1;
+}
+
+`;
+
+const GameContainer = styled.div`
+  animation: ${fadeIn} forwards ease-in 1s;
+`;
 
 const Game = () => {
   const { player1, player2, currentView } = useAppSelector(
@@ -17,7 +32,7 @@ const Game = () => {
     renderedView = <GameRules />;
   } else if (currentView === AppView.GAME) {
     renderedView = (
-      <>
+      <GameContainer>
         <div className="flex flex-col justify-center items-center">
           <div className="w-[635px]">
             <Header />
@@ -29,7 +44,7 @@ const Game = () => {
           </div>
         </div>
         <InGameMenu />
-      </>
+      </GameContainer>
     );
   } else {
     renderedView = (

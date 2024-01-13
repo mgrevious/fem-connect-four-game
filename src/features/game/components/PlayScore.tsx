@@ -1,9 +1,11 @@
-import Player1Svg from '../../../../assets/images/player-one.svg';
-import Player2Svg from '../../../../assets/images/player-two.svg';
-import globalStyles from '../../../../app.module.css';
 import React from 'react';
-import { Player, PlayerName } from '../../game-slice';
-import { useAppSelector } from '../../../../app/hooks';
+import { Player } from '../game.types';
+import { useAppSelector } from '../../../app/hooks';
+import { PlayerName } from '../helpers';
+import Player1Svg from '../../../assets/images/player-one.svg';
+import Player2Svg from '../../../assets/images/player-two.svg';
+
+import globalStyles from '../../../app.module.css';
 
 interface Props {
   player: Player;

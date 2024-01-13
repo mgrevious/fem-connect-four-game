@@ -1,12 +1,13 @@
 import {
-  AppView,
   pauseGame,
   restartGame,
   selectAppView,
   setRemainingTime,
-} from '../../game-slice';
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import appStyles from '../../../../app.module.css';
+} from '../game-slice';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { AppView } from '../helpers';
+
+import appStyles from '../../../app.module.css';
 
 const InGameMenu = () => {
   const dispatch = useAppDispatch();

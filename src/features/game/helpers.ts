@@ -3,13 +3,30 @@ import {
   GamePieceState,
   GameState,
   Player,
-  PlayerColor,
-} from './game-slice';
+  ColumnData,
+} from './game.types';
 
 export type RowNum = 0 | 1 | 2 | 3 | 4 | 5;
-export interface ColumnData {
-  lastPosition: RowNum | undefined;
-  rows: GamePieceState[];
+
+export enum PlayerType {
+  CPU,
+  HUMAN,
+}
+
+export enum PlayerColor {
+  RED,
+  YELLOW,
+}
+
+export enum PlayerName {
+  PLAYER_ONE,
+  PLAYER_TWO,
+}
+
+export enum AppView {
+  GAME,
+  MAIN_MENU,
+  GAME_RULES,
 }
 
 export function createGrid() {
