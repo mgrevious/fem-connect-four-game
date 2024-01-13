@@ -9,33 +9,34 @@ import globalStyles from '../../../app.module.css';
 
 interface Props {
   player: Player;
+  positionClass: string;
 }
 
-const PlayerScore: React.FC<Props> = ({ player }) => {
+const PlayScore: React.FC<Props> = ({ player, positionClass }) => {
   const { player1, player2 } = useAppSelector((state) => state.game);
-  const positionClass =
-    'absolute -top-8 left-0 right-0 flex justify-center w-full';
   const isPlayerOne = player.name === PlayerName.PLAYER_ONE;
+  const positionStyle = `${positionClass} top-3 lg:-top-8 flex justify-center lg:w-full absolute`;
+
   return (
     <div
-      className={`${globalStyles.border} flex flex-col items-center bg-white rounded-[20px] px-[30px] pt-[43px] pb-[23px] w-[200px] relative`}
+      className={`${globalStyles.border} flex flex-col items-center bg-white rounded-[20px] p-3 lg:px-[30px] lg:pt-[43px] lg:pb-[23px] w-[148px] lg:w-[200px] relative`}
     >
-      <p className="text-xl uppercase font-bold w-full text-center">
+      <p className="text-base lg:text-xl  uppercase font-bold w-full text-center">
         Player {isPlayerOne ? '1' : '2'}
       </p>
-      <p className="text-[56px] font-bold text-center">
+      <p className="text-[32px] leading-[40px] lg:text-[56px] lg:leading-[71px] font-bold text-center">
         {isPlayerOne ? player1.currentScore : player2.currentScore}
       </p>
       {isPlayerOne ? (
-        <div className={positionClass}>
+        <div className={positionStyle}>
           <img
-            className="w-[54px] h-[61px]"
+            className="lg:w-[54px] lg:h-[61px]"
             src={Player1Svg}
             alt="Player One icon"
           />
         </div>
       ) : (
-        <div className={positionClass}>
+        <div className={positionStyle}>
           <img className="w-[55px]" src={Player2Svg} alt="Player Two icon" />
         </div>
       )}
@@ -43,4 +44,4 @@ const PlayerScore: React.FC<Props> = ({ player }) => {
   );
 };
 
-export default PlayerScore;
+export default PlayScore;

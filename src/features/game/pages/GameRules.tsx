@@ -12,8 +12,8 @@ const GameRules = () => {
   return (
     <div className="container mx-auto flex items-center justify-center min-h-screen">
       <div className="flex justify-center">
-        <FadeInContainer className="relative flex flex-col justify-end py-12 px-9 w-[494px] bg-white border-l-[3px] border-t-[3px] border-r-[3px] border-b-[13px] border-black rounded-[40px] opacity-0">
-          <h1 className="uppercase mb-7 font-bold text-[56px] text-center">
+        <FadeInContainer className="relative flex flex-col justify-end py-12 px-9 lg:[494px] bg-white border-l-[3px] border-t-[3px] border-r-[3px] border-b-[13px] border-black rounded-[40px] opacity-0">
+          <h1 className="uppercase mb-7 font-bold lg:text-[56px] text-center">
             rules
           </h1>
           <h2 className="uppercase text-primary mb-4 text-xl font-bold">

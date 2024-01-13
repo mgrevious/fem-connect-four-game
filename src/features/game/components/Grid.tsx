@@ -7,7 +7,7 @@ import { ColumnNum } from '../game.types';
 
 import styles from '../game.module.css';
 
-const rowClass = 'flex flex-col w-[71px] mr-[17px] opacity-80';
+const rowClass = 'flex flex-col lg:w-[71px] mr-[17px] opacity-80';
 
 const Grid = () => {
   const [counter, setCounter] = useState(0);

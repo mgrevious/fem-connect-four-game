@@ -11,7 +11,7 @@ interface Props {
 }
 
 const otherClasses =
-  'w-[71px] flex items-center justify-center mb-[17px] opacity-100 relative';
+  'lg:w-[71px] flex items-center justify-center mb-[17px] opacity-100 relative';
 
 const Row: React.FC<Props> = ({ data, columnIndex, showGamePiece }) => {
   const { gameWinner } = useAppSelector((state) => state.game);

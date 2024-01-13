@@ -14,7 +14,7 @@ const WinnerDisplay: React.FC<Props> = ({ countdownApi }) => {
   const dispatch = useAppDispatch();
   const { gameWinner } = useAppSelector((state) => state.game);
   return (
-    <div className="w-full absolute -bottom-[139px] flex justify-center items-center">
+    <div className="w-full absolute -bottom-[159px] lg:-bottom-[139px] flex justify-center items-center">
       <div
         className={`w-[291px] h-[196px] bg-white ${appStyles.borderNoHover} rounded-[20px] flex flex-col items-center py-5`}
       >

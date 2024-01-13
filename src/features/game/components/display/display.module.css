@@ -2,17 +2,20 @@
   background-color: transparent;
   background-position: center center;
   background-repeat: no-repeat;
-  bottom: -113px;
+  bottom: -130px;
   height: 166px;
   left: 0;
   position: absolute;
   right: 0;
   width: 100%;
-
   &.red {
     background-image: url('../../../../assets/images/turn-background-red.svg');
   }
   &.yellow {
     background-image: url('../../../../assets/images/turn-background-yellow.svg');
+  }
+
+  @media (min-width: 1024px) {
+    bottom: -113px;
   }
 }

@@ -10,6 +10,9 @@ import { getFadeInContainer } from './styled-helpers';
 
 const FadeInContainer = getFadeInContainer();
 
+const player1Class = '-left-7 lg:right-0';
+const player2Class = '-right-7 lg:right-0';
+
 const Game = () => {
   const { player1, player2, currentView } = useAppSelector(
     (state) => state.game
@@ -21,14 +24,25 @@ const Game = () => {
   } else if (currentView === AppView.GAME) {
     renderedView = (
       <FadeInContainer>
-        <div className="flex flex-col justify-center items-center">
-          <div className="w-[635px]">
-            <Header />
-          </div>
-          <div className="flex justify-between items-center gap-5">
-            <PlayerScore player={player1} />
-            <Grid />
-            <PlayerScore player={player2} />
+        <div className="container mx-auto">
+          <div className="flex flex-col justify-center items-center">
+            <div className="w-full px-6 lg:w-[635px]">
+              <Header />
+            </div>
+            <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-5">
+              <div className="order-1 gap-4 lg:gap-0 lg:order-1 flex lg:block justify-between">
+                <PlayerScore positionClass={player1Class} player={player1} />
+                <div className="lg:hidden">
+                  <PlayerScore positionClass={player2Class} player={player2} />
+                </div>
+              </div>
+              <div className="order-3 lg:order-2">
+                <Grid />
+              </div>
+              <div className="hidden lg:order-3 lg:block">
+                <PlayerScore positionClass={player2Class} player={player2} />
+              </div>
+            </div>
           </div>
         </div>
         <InGameMenu />

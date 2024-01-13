@@ -91,14 +91,14 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
 
   return (
     <div className="absolute -top-11 left-0 right-0 h-[43px] w-full flex justify-center">
-      <div className="h-[43px] w-[632px] px-[17px] flex items-center justify-between">
+      <div className="h-[43px] lg:w-[632px] px-[17px] flex items-center justify-between">
         {gridColumns.map((column, index) => {
           if (selectedColumn === column) {
             return (
               <div
                 id=""
                 key={index}
-                className="flex justify-center w-[71px] relative"
+                className="invisible lg:visible flex justify-center lg:w-[71px] relative"
               >
                 <div
                   ref={gamePieceEl}
@@ -106,7 +106,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
                     activePlayer.color === PlayerColor.RED
                       ? styles.red
                       : styles.yellow
-                  } w-[71px] h-[71px] flex items-center justify-center mb-[17px] ${
+                  } lg:w-[71px] lg:h-[71px] flex items-center justify-center mb-[17px] ${
                     isColumnSelected ? 'visible' : 'invisible'
                   } absolute left-0 top-10`}
                 ></div>
@@ -129,7 +129,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
             <div
               id=""
               key={index}
-              className={`flex justify-center w-[71px] opacity-0 ${
+              className={`flex justify-center lg:w-[71px] opacity-0 ${
                 endGame ? 'cursor-default' : 'hover:opacity-100'
               }`}
             >
