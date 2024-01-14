@@ -11,7 +11,7 @@ interface Props {
 }
 
 const otherClasses =
-  'lg:w-[71px] flex items-center justify-center mb-[17px] opacity-100 relative';
+  'mt-1 lg:m-0 w-[42px] lg:w-[71px] flex items-center justify-center opacity-100 relative';
 
 const Row: React.FC<Props> = ({ data, columnIndex, showGamePiece }) => {
   const { gameWinner } = useAppSelector((state) => state.game);
@@ -28,10 +28,10 @@ const Row: React.FC<Props> = ({ data, columnIndex, showGamePiece }) => {
               : styles.yellow
           } ${otherClasses} ${
             showGamePiece ? `visible ${styles.bounce}` : 'invisible'
-          } h-[71px]`}
+          } h-[40px] lg:h-[73px]`}
         >
           {gameWinner !== undefined && gamePieceState.highlight ? (
-            <div className="w-[34px] h-[34px] border-[6px] border-white absolute top-[18px] left-[18px] rounded-full"></div>
+            <div className="w-[24px] h-[24px] lg:w-[34px] lg:h-[34px] border-[6px] border-white absolute top-1 left-2 lg:top-[18px] lg:left-[18px] rounded-full"></div>
           ) : null}
         </div>
       );
@@ -44,10 +44,10 @@ const Row: React.FC<Props> = ({ data, columnIndex, showGamePiece }) => {
             gamePieceState.color === PlayerColor.RED
               ? styles.red
               : styles.yellow
-          } ${otherClasses} opacity-100 h-[71px]`}
+          } ${otherClasses} opacity-100 h-[40px] lg:h-[73px]`}
         >
           {gameWinner !== undefined && gamePieceState.highlight ? (
-            <div className="w-[34px] h-[34px] border-[6px] border-white absolute top-[18px] left-[18px] rounded-full"></div>
+            <div className="w-[24px] h-[24px] lg:w-[34px] lg:h-[34px] border-[6px] border-white absolute top-1 left-2 lg:top-[18px] lg:left-[18px] rounded-full"></div>
           ) : null}
         </div>
       );
@@ -56,7 +56,7 @@ const Row: React.FC<Props> = ({ data, columnIndex, showGamePiece }) => {
       <div
         id={`${columnIndex}${index + 1}`}
         key={index}
-        className={`${styles.gamePiece} ${otherClasses} h-[71px]`}
+        className={`${styles.gamePiece} ${otherClasses} h-[44px] lg:h-[71px]`}
       ></div>
     );
   });

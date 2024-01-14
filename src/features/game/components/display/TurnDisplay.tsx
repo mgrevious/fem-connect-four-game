@@ -82,7 +82,7 @@ const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
                 return seconds;
               }}
               onPause={({ total }) => {
-                setRemainingTime(total);
+                dispatch(setRemainingTime(total));
               }}
               onComplete={() => {
                 // if there is no winner, auto select winner

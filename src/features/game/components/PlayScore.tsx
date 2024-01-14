@@ -24,7 +24,7 @@ const PlayScore: React.FC<Props> = ({ player, positionClass }) => {
       <p className="text-base lg:text-xl  uppercase font-bold w-full text-center">
         Player {isPlayerOne ? '1' : '2'}
       </p>
-      <p className="text-[32px] leading-[40px] lg:text-[56px] lg:leading-[71px] font-bold text-center">
+      <p className="text-[32px] leading-[44px] lg:text-[56px] lg:leading-[71px] font-bold text-center">
         {isPlayerOne ? player1.currentScore : player2.currentScore}
       </p>
       {isPlayerOne ? (

@@ -98,7 +98,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
               <div
                 id=""
                 key={index}
-                className="invisible lg:visible flex justify-center lg:w-[71px] relative"
+                className="opacity-0 lg:opacity-100 flex justify-center w-[42px] lg:w-[71px] relative"
               >
                 <div
                   ref={gamePieceEl}
@@ -106,7 +106,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
                     activePlayer.color === PlayerColor.RED
                       ? styles.red
                       : styles.yellow
-                  } lg:w-[71px] lg:h-[71px] flex items-center justify-center mb-[17px] ${
+                  } w-[42px] h-[44px] lg:w-[71px] lg:h-[71px] flex items-center justify-center mb-[17px] ${
                     isColumnSelected ? 'visible' : 'invisible'
                   } absolute left-0 top-10`}
                 ></div>
@@ -129,7 +129,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
             <div
               id=""
               key={index}
-              className={`flex justify-center lg:w-[71px] opacity-0 ${
+              className={`flex justify-center w-[42px] lg:w-[71px] opacity-0 ${
                 endGame ? 'cursor-default' : 'hover:opacity-100'
               }`}
             >

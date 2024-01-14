@@ -17,7 +17,7 @@ const InGameMenu = () => {
       aria-hidden="true"
       className={`${
         isPaused ? 'visible bg-black/50' : 'invisible'
-      } fixed top-0 left-0 right-0 h-full w-full overflow-y-auto overflow-x-hidden flex items-center justify-center outline-none focus:outline-none`}
+      } fixed top-0 left-0 right-0 h-full w-full overflow-y-auto overflow-x-hidden flex items-center justify-center outline-none focus:outline-none z-40`}
     >
       <div
         className={`${appStyles.borderNoHover} ${
