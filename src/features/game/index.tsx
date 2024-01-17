@@ -30,8 +30,8 @@ const Game = () => {
     renderedView = <GameRules />;
   } else if (currentView === AppView.GAME) {
     renderedView = (
-      <FadeInContainer className="relative z-10 min-h-screen">
-        <div className="relative z-30">
+      <FadeInContainer className="relative z-10">
+        <div className="relative min-h-screen z-30">
           <div className="flex flex-col justify-center items-center">
             <div className="w-full px-6 lg:w-[635px]">
               <Header />
@@ -68,7 +68,7 @@ const Game = () => {
     );
   }
 
-  return <main className="w-full h-screen">{renderedView} </main>;
+  return <main className="w-full">{renderedView} </main>;
 };
 
 export default Game;

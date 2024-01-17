@@ -1,5 +1,4 @@
-import CounterRedSmallSvg from '../../../assets/images/counter-red-small.svg';
-import CounterYellowSmallSvg from '../../../assets/images/counter-yellow-small.svg';
+import LogoSvg from '../../../assets/images/logo.svg';
 import PlayerVsPlayerSvg from '../../../assets/images/player-vs-player.svg';
 import { useAppDispatch } from '../../../app/hooks';
 import { selectAppView, startGame } from '../game-slice';
@@ -13,34 +12,11 @@ const FadeInContainer = getFadeInContainer();
 const StartMenu = () => {
   const dispatch = useAppDispatch();
   return (
-    <div className="mx-auto w-11/12 flex items-center justify-center min-h-screen">
-      <div className="w-full lg:w-[486px] lg:h-[451px] flex justify-center">
-        <FadeInContainer className="w-full flex flex-col justify-end items-center lg:p-[44px] lg:w-[480px] lg:h-[435px] border-0 bg-primary lg:border-l-[3px] lg:border-t-[3px] lg:border-r-[3px] lg:border-b-[13px] lg:border-black rounded-[40px]">
-          <div className="mb-[70px] mt-[30px]">
-            <div className="flex justify-between gap-1">
-              <img
-                src={CounterRedSmallSvg}
-                alt="Red Counter Icon"
-                className="w-[26px]"
-              />
-              <img
-                src={CounterYellowSmallSvg}
-                alt="Yellow Counter Icon"
-                className="w-[26px]"
-              />
-            </div>
-            <div className="flex justify-between gap-1">
-              <img
-                src={CounterYellowSmallSvg}
-                alt="Yellow Counter Icon"
-                className="w-[26px]"
-              />
-              <img
-                src={CounterRedSmallSvg}
-                alt="Red Counter Icon"
-                className="w-[26px]"
-              />
-            </div>
+    <div className="mx-auto w-11/12 h-screen">
+      <div className="flex flex-col items-center">
+        <FadeInContainer className="w-full h-screen pt-[200px] lg:mt-[230px] lg:p-[44px] lg:w-[480px] lg:h-[435px] border-0 bg-primary lg:border-l-[3px] lg:border-t-[3px] lg:border-r-[3px] lg:border-b-[13px] lg:border-black rounded-[40px]">
+          <div className="mb-[70px] mt-[30px] flex justify-center">
+            <img src={LogoSvg} alt="logo icon" />
           </div>
           <button
             onClick={() => {

@@ -3,23 +3,31 @@ import { ColumnNum, GamePieceState } from '../game.types';
 import { PlayerColor } from '../helpers';
 
 import styles from '../game.module.css';
+import { MutableRefObject } from 'react';
 
 interface Props {
   columnIndex: ColumnNum;
   data: GamePieceState[];
   showGamePiece: boolean;
+  dropPiece: MutableRefObject<HTMLDivElement | null>;
 }
 
 const otherClasses =
-  'mt-1 lg:m-0 w-[42px] lg:w-[71px] flex items-center justify-center opacity-100 relative';
+  'mt-1 lg:m-0 w-[42px] lg:w-[72px] flex items-center justify-center opacity-100 relative';
 
-const Row: React.FC<Props> = ({ data, columnIndex, showGamePiece }) => {
+const Row: React.FC<Props> = ({
+  data,
+  columnIndex,
+  showGamePiece,
+  dropPiece,
+}) => {
   const { gameWinner } = useAppSelector((state) => state.game);
 
   return data.map((gamePieceState, index) => {
     if (gamePieceState?.active) {
       return (
         <div
+          ref={dropPiece}
           id={`gamepiece_${columnIndex}${index + 1}`}
           key={index}
           className={`${styles.gamePiece} ${

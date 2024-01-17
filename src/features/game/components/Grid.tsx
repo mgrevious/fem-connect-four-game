@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAppSelector } from '../../../app/hooks';
 import Display from './display';
 import Selector from './Selector';
@@ -8,9 +8,10 @@ import { ColumnNum } from '../game.types';
 import styles from '../game.module.css';
 
 const rowClass =
-  'flex flex-col items-center justify-between lg:w-[71px] opacity-80 h-[286px] lg:h-[518px] lg:pt-2';
+  'flex flex-col items-center justify-between lg:w-[72px] opacity-80 h-[286px] lg:h-[518px] lg:pt-[10px]';
 
 const Grid = () => {
+  const ref = useRef<HTMLDivElement | null>(null);
   const [counter, setCounter] = useState(0);
   const [showSelectedGamePiece, setShowSelectedGamePiece] = useState(false);
   const { gameWinner, gridMap } = useAppSelector((state) => state.game);
@@ -24,6 +25,7 @@ const Grid = () => {
       setCounter(updatedCounter);
     }
   }, [counter]);
+  console.log('ref.current?.offsetTop', ref.current?.offsetTop);
 
   return (
     <div className="w-full">
@@ -37,6 +39,7 @@ const Grid = () => {
                   data={column.rows}
                   columnIndex={index as ColumnNum}
                   showGamePiece={showSelectedGamePiece}
+                  dropPiece={ref}
                 />
               </div>
             ))}
