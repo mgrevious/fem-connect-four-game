@@ -1,42 +1,18 @@
 import { useAppSelector } from '../../app/hooks';
 import Grid from './components/Grid';
-import PlayerScore from './components/PlayScore';
+import PlayerScore from './components/PlayerScore';
 import Header from './components/Header';
 import InGameMenu from './components/InGameMenu';
 import StartMenu from './pages/StartMenu';
 import GameRules from './pages/GameRules';
 import { AppView, PlayerName } from './helpers';
 import { getFadeInContainer } from './styled-helpers';
-import { Player } from './game.types';
+import InnerScore from './components/PlayerScore/InnerScore';
 
 const FadeInContainer = getFadeInContainer();
 
 const player1Class = '-left-7 lg:right-0 lg:left-0';
 const player2Class = '-right-7 lg:right-0 lg:left-0';
-
-function renderPlayerScore(player: Player) {
-  const isPlayerOne = player.name === PlayerName.PLAYER_ONE;
-  return (
-    <>
-      <p
-        className={`${
-          isPlayerOne ? 'order-1' : 'order-2'
-        } text-base sm:text-xl uppercase font-bold w-full text-center ${
-          isPlayerOne ? 'sm:text-left' : 'sm:text-right'
-        } lg:text-center`}
-      >
-        Player {isPlayerOne ? '1' : '2'}
-      </p>
-      <p
-        className={`${
-          isPlayerOne ? 'order-1 sm:order-2' : 'order-2 sm:order-1'
-        } text-[32px] leading-[44px] sm:text-[56px] sm:leading-[71px] font-bold text-center`}
-      >
-        {player.currentScore}
-      </p>
-    </>
-  );
-}
 
 const Game = () => {
   const { player1, player2, currentView, gameWinner } = useAppSelector(
@@ -68,11 +44,11 @@ const Game = () => {
                   positionClass={player1Class}
                   player={player1}
                 >
-                  {renderPlayerScore(player1)}
+                  <InnerScore player={player1} />
                 </PlayerScore>
                 <div className="lg:hidden w-[142px] sm:w-[271px] mr-5">
                   <PlayerScore positionClass={player2Class} player={player2}>
-                    {renderPlayerScore(player2)}
+                    <InnerScore player={player2} />
                   </PlayerScore>
                 </div>
               </div>
@@ -81,7 +57,7 @@ const Game = () => {
               </div>
               <div className="hidden lg:order-3 lg:block">
                 <PlayerScore positionClass={player2Class} player={player2}>
-                  {renderPlayerScore(player2)}
+                  <InnerScore player={player2} />
                 </PlayerScore>
               </div>
             </div>

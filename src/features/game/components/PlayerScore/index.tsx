@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
-import { Player } from '../game.types';
-import { PlayerName } from '../helpers';
-import Player1Svg from '../../../assets/images/player-one.svg';
-import Player2Svg from '../../../assets/images/player-two.svg';
+import { Player } from '../../game.types';
+import { PlayerName } from '../../helpers';
+import Player1Svg from '../../../../assets/images/player-one.svg';
+import Player2Svg from '../../../../assets/images/player-two.svg';
 
-import globalStyles from '../../../app.module.css';
+import globalStyles from '../../../../app.module.css';
 
 interface Props {
   className?: string;
@@ -13,7 +13,7 @@ interface Props {
   children: ReactNode;
 }
 
-const PlayScore: React.FC<Props> = ({
+const PlayerScore: React.FC<Props> = ({
   player,
   positionClass,
   className,
@@ -44,4 +44,4 @@ const PlayScore: React.FC<Props> = ({
   );
 };
 
-export default PlayScore;
+export default PlayerScore;

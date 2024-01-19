@@ -22,9 +22,9 @@ const InGameMenu = () => {
       <div
         className={`${appStyles.borderNoHover} ${
           isPaused ? 'scale-100 opacity-100' : 'scale-125 opacity-0'
-        } transition-all duration-500 ease-in-out bg-primary lg:w-[486px] lg:h-[517px] rounded-[40px] mx-auto z-50 p-10 flex flex-col items-center`}
+        } transition-all duration-500 ease-in-out bg-primary w-[90%] lg:w-[486px] lg:h-[517px] rounded-[40px] mx-auto z-50 p-10 flex flex-col items-center`}
       >
-        <h2 className="uppercase font-bold lg:text-[56px] text-center text-white mt-4 mb-8">
+        <h2 className="uppercase font-bold text-[56px] text-center text-white mt-4 mb-8">
           pause
         </h2>
         <button
