@@ -3,6 +3,7 @@ import CheckmarkSvg from '../../../assets/images/icon-check.svg';
 import { selectAppView } from '../game-slice';
 import { AppView } from '../helpers';
 import { getFadeInContainer } from '../styled-helpers';
+import styles from './style.module.css';
 
 const FadeInContainer = getFadeInContainer();
 
@@ -12,8 +13,10 @@ const GameRules = () => {
   return (
     <div className="container mx-auto flex items-center justify-center min-h-screen">
       <div className="flex justify-center">
-        <FadeInContainer className="relative flex flex-col justify-end py-12 px-9 lg:[494px] bg-white border-l-[3px] border-t-[3px] border-r-[3px] border-b-[13px] border-black rounded-[40px] opacity-0">
-          <h1 className="uppercase mb-7 font-bold lg:text-[56px] text-center">
+        <FadeInContainer
+          className={`${styles.gameRules} relative flex flex-col justify-end py-12 px-9 max-w-[90%] sm:w-[534px] bg-white border-l-[3px] border-t-[3px] border-r-[3px] border-b-[13px] border-black rounded-[40px] opacity-0`}
+        >
+          <h1 className="uppercase mb-7 font-bold text-[56px] leading-[56px] text-center">
             rules
           </h1>
           <h2 className="uppercase text-primary mb-4 text-xl font-bold">

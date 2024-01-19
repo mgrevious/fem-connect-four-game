@@ -1,0 +1,8 @@
+.gameRules {
+  @media screen and (min-height: 500px) {
+    margin: 1rem 0 3rem;
+  }
+  @media screen and (min-height: 670px) {
+    margin: 0;
+  }
+}
