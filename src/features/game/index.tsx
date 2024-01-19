@@ -33,14 +33,14 @@ const Game = () => {
     renderedView = (
       <FadeInContainer className="relative z-10">
         <div className="relative min-h-screen z-30">
+          <div className="w-full lg:w-[635px] mx-auto">
+            <Header />
+          </div>
           <div className="flex flex-col justify-center items-center">
-            <div className="w-full px-6 lg:w-[635px]">
-              <Header />
-            </div>
             <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-5">
               <div className="order-1 lg:gap-0 lg:order-1 flex lg:block justify-between w-full">
                 <PlayerScore
-                  className="ml-5"
+                  className="ml-5 sm:ml-0"
                   positionClass={player1Class}
                   player={player1}
                 >
