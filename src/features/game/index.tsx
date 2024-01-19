@@ -33,10 +33,10 @@ const Game = () => {
     renderedView = (
       <FadeInContainer className="relative z-10">
         <div className="relative min-h-screen z-30">
-          <div className="w-full lg:w-[635px] mx-auto">
+          <header className="w-full lg:w-[635px] mx-auto">
             <Header />
-          </div>
-          <div className="flex flex-col justify-center items-center">
+          </header>
+          <main className="flex flex-col justify-center items-center">
             <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-5">
               <div className="order-1 lg:gap-0 lg:order-1 flex lg:block justify-between w-full">
                 <PlayerScore
@@ -61,7 +61,7 @@ const Game = () => {
                 </PlayerScore>
               </div>
             </div>
-          </div>
+          </main>
         </div>
         <InGameMenu />
         {currentView === AppView.GAME && (
@@ -73,13 +73,13 @@ const Game = () => {
     );
   } else {
     renderedView = (
-      <div className="bg-primary lg:bg-primary-dark">
+      <main className="bg-primary lg:bg-primary-dark">
         <StartMenu />
-      </div>
+      </main>
     );
   }
 
-  return <main className="w-full">{renderedView} </main>;
+  return <div className="w-full">{renderedView} </div>;
 };
 
 export default Game;

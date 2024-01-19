@@ -6,7 +6,7 @@ import { pauseGame, restartGame, setRemainingTime } from '../game-slice';
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   return (
-    <header>
+    <div>
       <nav className="flex justify-between items-center my-12">
         <div>
           <button
@@ -34,7 +34,7 @@ const Header: React.FC = () => {
           </button>
         </div>
       </nav>
-    </header>
+    </div>
   );
 };
 
