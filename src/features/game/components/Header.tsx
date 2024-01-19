@@ -13,13 +13,13 @@ const Header: React.FC = () => {
             onClick={() => {
               dispatch(pauseGame(true));
             }}
-            className="py-[10px] px-[21px] text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90"
+            className="h-[39px] px-[21px] text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90"
           >
             menu
           </button>
         </div>
         <div>
-          <img src={MenuSvg} alt="Menu Icon" />
+          <img src={MenuSvg} alt="Menu Icon" className="w-[46px] sm:w-[56px]" />
         </div>
         <div>
           <button
@@ -28,7 +28,7 @@ const Header: React.FC = () => {
               dispatch(setRemainingTime(30 * 1000));
               dispatch(pauseGame(false));
             }}
-            className="py-[12px] px-6 text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90"
+            className="h-[39px] px-6 text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90"
           >
             restart
           </button>

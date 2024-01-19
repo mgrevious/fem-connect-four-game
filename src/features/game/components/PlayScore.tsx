@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Player } from '../game.types';
-import { useAppSelector } from '../../../app/hooks';
 import { PlayerName } from '../helpers';
 import Player1Svg from '../../../assets/images/player-one.svg';
 import Player2Svg from '../../../assets/images/player-two.svg';
@@ -8,25 +7,26 @@ import Player2Svg from '../../../assets/images/player-two.svg';
 import globalStyles from '../../../app.module.css';
 
 interface Props {
+  className?: string;
   player: Player;
   positionClass: string;
+  children: ReactNode;
 }
 
-const PlayScore: React.FC<Props> = ({ player, positionClass }) => {
-  const { player1, player2 } = useAppSelector((state) => state.game);
+const PlayScore: React.FC<Props> = ({
+  player,
+  positionClass,
+  className,
+  children,
+}) => {
   const isPlayerOne = player.name === PlayerName.PLAYER_ONE;
   const positionStyle = `${positionClass} top-3 lg:-top-8 flex justify-center lg:w-full absolute`;
 
   return (
     <div
-      className={`${globalStyles.border} flex flex-col items-center bg-white rounded-[20px] p-3 lg:px-[30px] lg:pt-[43px] lg:pb-[23px] w-[148px] lg:w-[200px] relative`}
+      className={`${className} ${globalStyles.border} flex flex-col sm:flex-row lg:flex-col items-center bg-white rounded-[20px] p-3 sm:px-[45px] lg:px-[30px] lg:pt-[43px] lg:pb-[23px w-[142px] sm:w-[271px] lg:w-[200px] relative`}
     >
-      <p className="text-base lg:text-xl  uppercase font-bold w-full text-center">
-        Player {isPlayerOne ? '1' : '2'}
-      </p>
-      <p className="text-[32px] leading-[44px] lg:text-[56px] lg:leading-[71px] font-bold text-center">
-        {isPlayerOne ? player1.currentScore : player2.currentScore}
-      </p>
+      {children}
       {isPlayerOne ? (
         <div className={positionStyle}>
           <img

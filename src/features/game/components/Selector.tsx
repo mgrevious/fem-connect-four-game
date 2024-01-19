@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
   checkForGameWinner,
   setIsColumnSelected,
@@ -18,10 +18,15 @@ interface Props {
 }
 
 const gridColumns: ColumnNum[] = [0, 1, 2, 3, 4, 5, 6];
-const gamePieceOffsets = [17, 105, 193, 281, 369, 457];
+const desktopGamePieceOffsets = [17, 105, 193, 281, 369, 457];
+const mobileGamePieceOffsets = [12, 64, 114, 162, 209, 254];
 
 const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
+  const dispatch = useAppDispatch();
   const gamePieceEl = useRef<HTMLDivElement | null>(null);
+  const gamePieceAnimation = useRef<Animation | null>(null);
+  const documentWidth = useRef<number>(document.body.clientWidth);
+
   const {
     activePlayer,
     selectedColumn,
@@ -30,44 +35,67 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
     isColumnSelected,
     highestPositionList,
   } = useAppSelector((state) => state.game);
-  const dispatch = useAppDispatch();
-  const gamePieceAnimation = useRef<Animation | null>(null);
+
   const getAnimationOffset = useCallback(() => {
     const rowNum = highestPositionList[selectedColumn];
-    return rowNum !== undefined ? gamePieceOffsets[rowNum] : 508;
+    let offsets = [];
+    let defaultValue = 0;
+    if (documentWidth.current < 768) {
+      offsets = mobileGamePieceOffsets;
+      defaultValue = 300;
+    } else {
+      offsets = desktopGamePieceOffsets;
+      defaultValue = 508;
+    }
+    return rowNum !== undefined ? offsets[rowNum] : defaultValue;
   }, [highestPositionList, selectedColumn]);
 
-  useEffect(() => {
-    const rowNum = highestPositionList[selectedColumn];
-    let animation = gamePieceAnimation.current;
-    animation = new Animation(
-      new KeyframeEffect(
-        gamePieceEl.current,
-        [
-          {
-            top: '60px',
-          },
-          {
-            top: `${getAnimationOffset()}px`,
-          },
-        ],
-        {
-          duration: 600,
-          easing: 'cubic-bezier(0.32, 0, 0.67, 0)',
-        }
-      )
-    );
+  const handleResize = () => {
+    documentWidth.current = document.body.clientWidth;
+  };
 
-    if (animation && isColumnSelected && rowNum !== undefined && rowNum > 0) {
-      animation.play();
-      animation.onfinish = () => {
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const selectedRowNum = highestPositionList[selectedColumn];
+
+    if (
+      isColumnSelected &&
+      selectedRowNum !== undefined &&
+      selectedRowNum > 0
+    ) {
+      gamePieceAnimation.current = new Animation(
+        new KeyframeEffect(
+          gamePieceEl.current,
+          [
+            {
+              top: '60px',
+            },
+            {
+              top: `${getAnimationOffset()}px`,
+            },
+          ],
+          {
+            duration: 600,
+            easing: 'cubic-bezier(0.32, 0, 0.67, 0)',
+          }
+        )
+      );
+      gamePieceAnimation.current.play();
+      gamePieceAnimation.current.onfinish = () => {
         dispatch(setIsColumnSelected(false));
         setAnimationComplete(true);
         setTimeout(() => {
           dispatch(checkForGameWinner());
         }, 200);
       };
-    } else if (rowNum !== undefined && rowNum === 0) {
+    } else if (selectedRowNum !== undefined && selectedRowNum === 0) {
       // no animation for gamepiece at row 0
       dispatch(setIsColumnSelected(false));
       setAnimationComplete(true);
@@ -91,14 +119,14 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
 
   return (
     <div className="absolute -top-11 left-0 right-0 h-[43px] w-full flex justify-center">
-      <div className="h-[43px] lg:w-[632px] px-[17px] flex items-center justify-between">
+      <div className="h-[43px] w-[327px] sm:w-[632px] sm:px-[17px] flex items-center justify-between">
         {gridColumns.map((column, index) => {
           if (selectedColumn === column) {
             return (
               <div
                 id=""
                 key={index}
-                className="opacity-0 lg:opacity-100 flex justify-center w-[42px] lg:w-[71px] relative"
+                className=" flex justify-center w-[42px] sm:w-[71px] relative"
               >
                 <div
                   ref={gamePieceEl}
@@ -106,11 +134,12 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
                     activePlayer.color === PlayerColor.RED
                       ? styles.red
                       : styles.yellow
-                  } w-[42px] h-[44px] lg:w-[71px] lg:h-[71px] flex items-center justify-center mb-[17px] ${
+                  } w-[42px] h-[44px] sm:w-[71px] sm:h-[71px] flex items-center justify-center mb-[17px] ${
                     isColumnSelected ? 'visible' : 'invisible'
                   } absolute left-0 top-10`}
                 ></div>
                 <button
+                  className="opacity-0 lg:opacity-100"
                   disabled={
                     endGame || gridMap[selectedColumn].lastPosition === 0
                   }
@@ -129,7 +158,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
             <div
               id=""
               key={index}
-              className={`flex justify-center w-[42px] lg:w-[71px] opacity-0 ${
+              className={`flex justify-center w-[42px] sm:w-[71px] opacity-0 ${
                 endGame ? 'cursor-default' : 'hover:opacity-100'
               }`}
             >

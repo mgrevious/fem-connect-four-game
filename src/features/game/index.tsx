@@ -5,13 +5,38 @@ import Header from './components/Header';
 import InGameMenu from './components/InGameMenu';
 import StartMenu from './pages/StartMenu';
 import GameRules from './pages/GameRules';
-import { AppView, PlayerColor, PlayerName } from './helpers';
+import { AppView, PlayerName } from './helpers';
 import { getFadeInContainer } from './styled-helpers';
+import { Player } from './game.types';
 
 const FadeInContainer = getFadeInContainer();
 
 const player1Class = '-left-7 lg:right-0 lg:left-0';
 const player2Class = '-right-7 lg:right-0 lg:left-0';
+
+function renderPlayerScore(player: Player) {
+  const isPlayerOne = player.name === PlayerName.PLAYER_ONE;
+  return (
+    <>
+      <p
+        className={`${
+          isPlayerOne ? 'order-1' : 'order-2'
+        } text-base sm:text-xl uppercase font-bold w-full text-center ${
+          isPlayerOne ? 'sm:text-left' : 'sm:text-right'
+        } lg:text-center`}
+      >
+        Player {isPlayerOne ? '1' : '2'}
+      </p>
+      <p
+        className={`${
+          isPlayerOne ? 'order-1 sm:order-2' : 'order-2 sm:order-1'
+        } text-[32px] leading-[44px] sm:text-[56px] sm:leading-[71px] font-bold text-center`}
+      >
+        {player.currentScore}
+      </p>
+    </>
+  );
+}
 
 const Game = () => {
   const { player1, player2, currentView, gameWinner } = useAppSelector(
@@ -37,17 +62,27 @@ const Game = () => {
               <Header />
             </div>
             <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-5">
-              <div className="order-1 gap-4 lg:gap-0 lg:order-1 flex lg:block justify-between">
-                <PlayerScore positionClass={player1Class} player={player1} />
-                <div className="lg:hidden">
-                  <PlayerScore positionClass={player2Class} player={player2} />
+              <div className="order-1 lg:gap-0 lg:order-1 flex lg:block justify-between w-full">
+                <PlayerScore
+                  className="ml-5"
+                  positionClass={player1Class}
+                  player={player1}
+                >
+                  {renderPlayerScore(player1)}
+                </PlayerScore>
+                <div className="lg:hidden w-[142px] sm:w-[271px] mr-5">
+                  <PlayerScore positionClass={player2Class} player={player2}>
+                    {renderPlayerScore(player2)}
+                  </PlayerScore>
                 </div>
               </div>
               <div className="order-3 lg:order-2">
                 <Grid />
               </div>
               <div className="hidden lg:order-3 lg:block">
-                <PlayerScore positionClass={player2Class} player={player2} />
+                <PlayerScore positionClass={player2Class} player={player2}>
+                  {renderPlayerScore(player2)}
+                </PlayerScore>
               </div>
             </div>
           </div>
@@ -55,7 +90,7 @@ const Game = () => {
         <InGameMenu />
         {currentView === AppView.GAME && (
           <div
-            className={`${bgColor} rounded-t-[60px] absolute bottom-0 left-0 right-0 h-[35%] z-10`}
+            className={`${bgColor} rounded-t-[60px] fixed w-full bottom-0 left-0 right-0 h-[30%] lg:h-[33%] z-10`}
           ></div>
         )}
       </FadeInContainer>

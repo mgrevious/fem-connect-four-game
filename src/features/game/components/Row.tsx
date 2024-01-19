@@ -13,7 +13,10 @@ interface Props {
 }
 
 const otherClasses =
-  'mt-1 lg:m-0 w-[42px] lg:w-[72px] flex items-center justify-center opacity-100 relative';
+  'mt-1 lg:m-0 w-[42px] sm:w-[72px] flex items-center justify-center opacity-100 relative';
+const gameWinnerDiv = (
+  <div className="w-[20px] h-[20px] sm:w-[34px] sm:h-[34px] border-[6px] border-white absolute top-[6px] left-[11px] sm:top-[18px] sm:left-[18px] rounded-full"></div>
+);
 
 const Row: React.FC<Props> = ({
   data,
@@ -36,11 +39,11 @@ const Row: React.FC<Props> = ({
               : styles.yellow
           } ${otherClasses} ${
             showGamePiece ? `visible ${styles.bounce}` : 'invisible'
-          } h-[40px] lg:h-[73px]`}
+          } h-[40px] sm:h-[73px]`}
         >
-          {gameWinner !== undefined && gamePieceState.highlight ? (
-            <div className="w-[24px] h-[24px] lg:w-[34px] lg:h-[34px] border-[6px] border-white absolute top-1 left-2 lg:top-[18px] lg:left-[18px] rounded-full"></div>
-          ) : null}
+          {gameWinner !== undefined && gamePieceState.highlight
+            ? gameWinnerDiv
+            : null}
         </div>
       );
     } else if (gamePieceState?.selected) {
@@ -52,11 +55,11 @@ const Row: React.FC<Props> = ({
             gamePieceState.color === PlayerColor.RED
               ? styles.red
               : styles.yellow
-          } ${otherClasses} opacity-100 h-[40px] lg:h-[73px]`}
+          } ${otherClasses} opacity-100 h-[40px] sm:h-[73px]`}
         >
-          {gameWinner !== undefined && gamePieceState.highlight ? (
-            <div className="w-[24px] h-[24px] lg:w-[34px] lg:h-[34px] border-[6px] border-white absolute top-1 left-2 lg:top-[18px] lg:left-[18px] rounded-full"></div>
-          ) : null}
+          {gameWinner !== undefined && gamePieceState.highlight
+            ? gameWinnerDiv
+            : null}
         </div>
       );
     }
@@ -64,7 +67,7 @@ const Row: React.FC<Props> = ({
       <div
         id={`${columnIndex}${index + 1}`}
         key={index}
-        className={`${styles.gamePiece} ${otherClasses} h-[44px] lg:h-[71px]`}
+        className={`${styles.gamePiece} ${otherClasses} h-[44px] sm:h-[71px]`}
       ></div>
     );
   });

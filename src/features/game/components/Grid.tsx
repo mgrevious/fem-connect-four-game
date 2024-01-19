@@ -8,7 +8,7 @@ import { ColumnNum } from '../game.types';
 import styles from '../game.module.css';
 
 const rowClass =
-  'flex flex-col items-center justify-between lg:w-[72px] opacity-80 h-[286px] lg:h-[518px] lg:pt-[10px]';
+  'flex flex-col items-center justify-between sm:w-[72px] opacity-80 h-[286px] sm:h-[518px] sm:pt-[10px]';
 
 const Grid = () => {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -25,14 +25,13 @@ const Grid = () => {
       setCounter(updatedCounter);
     }
   }, [counter]);
-  console.log('ref.current?.offsetTop', ref.current?.offsetTop);
 
   return (
-    <div className="w-full">
-      <div className="flex justify-center">
+    <div className="w-full relative">
+      <div className="flex justify-center z-10">
         <div className={`${styles.gridBack} relative`}>
           <Selector setAnimationComplete={setAnimationComplete} />
-          <div className="flex justify-between w-full p-2 lg:p-[17px]">
+          <div className="flex justify-between w-full p-2 sm:p-[17px]">
             {gridMap.map((column, index) => (
               <div key={index} className={rowClass}>
                 <Row
@@ -45,7 +44,7 @@ const Grid = () => {
             ))}
           </div>
           <div
-            className={`${styles.gridFront} flex absolute top-0 left-0 right-0 lg:p-[17px]`}
+            className={`${styles.gridFront} flex absolute top-0 left-0 right-0 sm:p-[17px]`}
           />
           <Display showWinner={gameWinner !== undefined} />
         </div>
