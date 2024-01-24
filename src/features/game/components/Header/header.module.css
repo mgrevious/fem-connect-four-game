@@ -3,4 +3,9 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 40px 40px;
+
+  @media screen(sm) {
+    background-size: 58px 58px;
+    height: 58px;
+  }
 }

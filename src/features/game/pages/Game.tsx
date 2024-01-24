@@ -32,11 +32,11 @@ const Game = () => {
     renderedView = (
       <FadeInContainer className="relative z-10">
         <div className="relative min-h-screen z-30">
-          <header className="max-w-[332px] sm:w-[638px] mx-auto">
+          <header className="max-w-[332px] sm:max-w-[636px] mx-auto">
             <Header />
           </header>
           <main className="flex flex-col justify-center items-center">
-            <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-5">
+            <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-[19px]">
               <div className="order-1 lg:gap-0 lg:order-1 flex lg:block justify-between w-full">
                 <PlayerScore
                   className="ml-6 lg:ml-0"
@@ -59,7 +59,7 @@ const Game = () => {
         <InGameMenu />
         {currentView === AppView.GAME && (
           <div
-            className={`${bgColor} rounded-t-[60px] fixed w-full bottom-0 left-0 right-0 h-[30%] sm:h-[20%] lg:h-[33%] z-10`}
+            className={`${bgColor} rounded-t-[60px] fixed w-full bottom-0 left-0 right-0 h-[30%] sm:h-[20%] lg:h-[20%] z-10`}
           ></div>
         )}
       </FadeInContainer>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
   checkForGameWinner,
   setIsColumnSelected,
@@ -29,7 +29,6 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
   const gamePieceAnimation = useRef<Animation | null>(null);
   const documentWidth = useRef<number>(document.body.clientWidth);
   const selectorEl = useRef<HTMLDivElement | null>(null);
-  const [selectorClass, setSelectorClass] = useState('');
 
   const {
     activePlayer,
@@ -65,27 +64,6 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  const handleSelectorMouseEnter = () => {
-    setSelectorClass('lg:opacity-0 lg:hover:opacity-100');
-  };
-  const handleSelectorMouseOut = () => {
-    setSelectorClass('');
-  };
-
-  useEffect(() => {
-    const selectorDiv = selectorEl.current;
-    if (selectorDiv) {
-      selectorDiv.addEventListener('mouseover', handleSelectorMouseEnter);
-      selectorDiv.addEventListener('mouseout', handleSelectorMouseOut);
-    }
-    return () => {
-      if (selectorDiv) {
-        selectorDiv.removeEventListener('mouseover', handleSelectorMouseEnter);
-        selectorDiv.removeEventListener('mouseout', handleSelectorMouseOut);
-      }
-    };
-  });
 
   useEffect(() => {
     const selectedRowNum = highestPositionList[selectedColumn];
@@ -147,7 +125,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
   return (
     <div
       ref={selectorEl}
-      className="absolute -top-11 left-0 right-0 h-[43px] w-full flex justify-center"
+      className="absolute -top-[38px] left-0 right-0 h-[43px] w-full flex justify-center"
     >
       <div className="group h-[43px] w-[327px] sm:w-[632px] sm:px-[17px] flex items-center justify-between">
         {gridColumns.map((column, index) => {
@@ -170,8 +148,11 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
                 ></div>
 
                 <button
-                  className={`opacity-0 lg:opacity-100 ${selectorClass}
-                }`}
+                  className={`lg:opacity-0 ${
+                    !endGame && gridMap[selectedColumn].lastPosition !== 0
+                      ? 'lg:hover:opacity-100'
+                      : ''
+                  }`}
                   disabled={
                     endGame || gridMap[selectedColumn].lastPosition === 0
                   }

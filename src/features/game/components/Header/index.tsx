@@ -13,7 +13,9 @@ const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   return (
     <div>
-      <nav className={`${styles.menu} flex justify-between items-center my-12`}>
+      <nav
+        className={`${styles.menu} flex justify-between items-center mt-9 mb-6 lg:mt-12 lg:mb-10`}
+      >
         <button
           onClick={() => {
             dispatch(pauseGame(true));
