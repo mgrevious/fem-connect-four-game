@@ -170,7 +170,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
                 ></div>
 
                 <button
-                  className={`lg:opacity-100 ${selectorClass}
+                  className={`opacity-0 lg:opacity-100 ${selectorClass}
                 }`}
                   disabled={
                     endGame || gridMap[selectedColumn].lastPosition === 0
