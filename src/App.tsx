@@ -1,4 +1,4 @@
-import Game from './features/game';
+import Game from './features/game/pages/Game';
 // import StartMenu from './features/start-menu';
 // import Game from './features/game';
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useAppSelector } from '../../../app/hooks';
 import Display from './display';
 import Selector from './Selector';
@@ -12,19 +12,11 @@ const rowClass =
 
 const Grid = () => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [counter, setCounter] = useState(0);
   const [showSelectedGamePiece, setShowSelectedGamePiece] = useState(false);
   const { gameWinner, gridMap } = useAppSelector((state) => state.game);
   const setAnimationComplete = useCallback((value: boolean) => {
     setShowSelectedGamePiece(value);
   }, []);
-
-  useEffect(() => {
-    if (counter < 3) {
-      const updatedCounter = counter + 1;
-      setCounter(updatedCounter);
-    }
-  }, [counter]);
 
   return (
     <div className="w-full relative">

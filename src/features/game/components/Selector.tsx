@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   checkForGameWinner,
   setIsColumnSelected,
-  selectColumn,
   selectGridPosition,
+  selectColumn,
+  setRemainingTime,
+  REMAINING_TIME,
 } from '../game-slice';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import MarkerRedSvg from '../../../assets/images/marker-red.svg';
@@ -26,6 +28,8 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
   const gamePieceEl = useRef<HTMLDivElement | null>(null);
   const gamePieceAnimation = useRef<Animation | null>(null);
   const documentWidth = useRef<number>(document.body.clientWidth);
+  const selectorEl = useRef<HTMLDivElement | null>(null);
+  const [selectorClass, setSelectorClass] = useState('');
 
   const {
     activePlayer,
@@ -62,6 +66,27 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
     };
   }, []);
 
+  const handleSelectorMouseEnter = () => {
+    setSelectorClass('lg:opacity-0 lg:hover:opacity-100');
+  };
+  const handleSelectorMouseOut = () => {
+    setSelectorClass('');
+  };
+
+  useEffect(() => {
+    const selectorDiv = selectorEl.current;
+    if (selectorDiv) {
+      selectorDiv.addEventListener('mouseover', handleSelectorMouseEnter);
+      selectorDiv.addEventListener('mouseout', handleSelectorMouseOut);
+    }
+    return () => {
+      if (selectorDiv) {
+        selectorDiv.removeEventListener('mouseover', handleSelectorMouseEnter);
+        selectorDiv.removeEventListener('mouseout', handleSelectorMouseOut);
+      }
+    };
+  });
+
   useEffect(() => {
     const selectedRowNum = highestPositionList[selectedColumn];
 
@@ -93,6 +118,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
         setAnimationComplete(true);
         setTimeout(() => {
           dispatch(checkForGameWinner());
+          dispatch(setRemainingTime(REMAINING_TIME));
         }, 200);
       };
     } else if (selectedRowNum !== undefined && selectedRowNum === 0) {
@@ -101,6 +127,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
       setAnimationComplete(true);
       setTimeout(() => {
         dispatch(checkForGameWinner());
+        dispatch(setRemainingTime(REMAINING_TIME));
       }, 200);
     }
   }, [
@@ -118,8 +145,11 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
   }
 
   return (
-    <div className="absolute -top-11 left-0 right-0 h-[43px] w-full flex justify-center">
-      <div className="h-[43px] w-[327px] sm:w-[632px] sm:px-[17px] flex items-center justify-between">
+    <div
+      ref={selectorEl}
+      className="absolute -top-11 left-0 right-0 h-[43px] w-full flex justify-center"
+    >
+      <div className="group h-[43px] w-[327px] sm:w-[632px] sm:px-[17px] flex items-center justify-between">
         {gridColumns.map((column, index) => {
           if (selectedColumn === column) {
             return (
@@ -134,19 +164,20 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
                     activePlayer.color === PlayerColor.RED
                       ? styles.red
                       : styles.yellow
-                  } w-[42px] h-[44px] sm:w-[71px] sm:h-[71px] flex items-center justify-center mb-[17px] ${
+                  } w-[42px] h-[44px] sm:w-[71px] sm:h-[75px] flex items-center justify-center mb-[17px] ${
                     isColumnSelected ? 'visible' : 'invisible'
                   } absolute left-0 top-10`}
                 ></div>
+
                 <button
-                  className="opacity-0 lg:opacity-100"
+                  className={`lg:opacity-100 ${selectorClass}
+                }`}
                   disabled={
                     endGame || gridMap[selectedColumn].lastPosition === 0
                   }
                   onClick={() => {
                     setAnimationComplete(false);
                     dispatch(selectGridPosition(column));
-                    // dispatch(checkForGameWinner());
                   }}
                 >
                   <img src={markerSrc} alt="Marker" />
@@ -154,11 +185,12 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
               </div>
             );
           }
+
           return (
             <div
               id=""
               key={index}
-              className={`flex justify-center w-[42px] sm:w-[71px] opacity-0 ${
+              className={`flex justify-center w-[42px] sm:w-[71px] sm:h-[75px] opacity-0 ${
                 endGame ? 'cursor-default' : 'hover:opacity-100'
               }`}
             >
@@ -168,7 +200,6 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
                   setAnimationComplete(false);
                   dispatch(selectColumn(column));
                   dispatch(selectGridPosition(column));
-                  // dispatch(checkForGameWinner());
                 }}
               >
                 <img src={markerSrc} alt="Marker" />

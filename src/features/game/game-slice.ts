@@ -26,6 +26,8 @@ const player2: Player = {
   color: PlayerColor.YELLOW,
 };
 
+export const REMAINING_TIME = 30 * 1000;
+
 const initialState: GameState = {
   player1,
   player2,
@@ -38,7 +40,7 @@ const initialState: GameState = {
   timerReset: false,
   currentView: AppView.MAIN_MENU,
   gridMap: createGrid(),
-  remainingTime: 30 * 1000,
+  remainingTime: REMAINING_TIME,
   isColumnSelected: false,
   highestPositionList: new Array(7).fill(undefined),
 };
@@ -151,7 +153,7 @@ const gameSlice = createSlice({
         } else {
           state.activePlayer = state.player1;
         }
-        state.timerReset = true;
+        // state.timerReset = true;
       }
     },
     continueGame(state) {

@@ -12,17 +12,15 @@ const InnerScore: React.FC<Props> = ({ player }) => {
     <>
       <p
         className={`${
-          isPlayerOne ? 'order-1' : 'order-2'
-        } text-base sm:text-xl uppercase font-bold w-full text-center ${
-          isPlayerOne ? 'sm:text-left' : 'sm:text-right'
-        } lg:text-center`}
+          isPlayerOne ? 'sm:text-left' : 'sm:text-right sm:order-2 lg:order-1'
+        } order-1 text-base sm:text-xl uppercase font-bold w-full text-center lg:text-center`}
       >
         Player {isPlayerOne ? '1' : '2'}
       </p>
       <p
         className={`${
-          isPlayerOne ? 'order-1 sm:order-2' : 'order-2 sm:order-1'
-        } text-[32px] leading-[44px] sm:text-[56px] sm:leading-[71px] font-bold text-center`}
+          !isPlayerOne && 'sm:order-1 lg:order-2'
+        } order-2 text-[32px] leading-[44px] sm:text-[56px] sm:leading-[71px] font-bold text-center`}
       >
         {player.currentScore}
       </p>

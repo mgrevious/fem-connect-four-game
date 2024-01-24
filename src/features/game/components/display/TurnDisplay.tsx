@@ -45,10 +45,10 @@ const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
 
   useEffect(() => {
     if (timerReset) {
-      setRestartKey(1);
+      setRestartKey(restartKey + 1);
       dispatch(setTimerReset(false));
     }
-  }, [timerReset, dispatch]);
+  }, [timerReset, dispatch, restartKey]);
 
   return (
     <div
