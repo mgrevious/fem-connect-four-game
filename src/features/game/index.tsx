@@ -43,22 +43,16 @@ const Game = () => {
                   className="ml-5 sm:ml-0"
                   positionClass={player1Class}
                   player={player1}
-                >
-                  <InnerScore player={player1} />
-                </PlayerScore>
+                />
                 <div className="lg:hidden w-[142px] sm:w-[271px] mr-5">
-                  <PlayerScore positionClass={player2Class} player={player2}>
-                    <InnerScore player={player2} />
-                  </PlayerScore>
+                  <PlayerScore positionClass={player2Class} player={player2} />
                 </div>
               </div>
               <div className="order-3 lg:order-2">
                 <Grid />
               </div>
               <div className="hidden lg:order-3 lg:block">
-                <PlayerScore positionClass={player2Class} player={player2}>
-                  <InnerScore player={player2} />
-                </PlayerScore>
+                <PlayerScore positionClass={player2Class} player={player2} />
               </div>
             </div>
           </main>
