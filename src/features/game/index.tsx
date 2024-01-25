@@ -1,9 +1,10 @@
 import { useAppSelector } from '../../app/hooks';
 import StartMenu from './pages/StartMenu';
 import GameRules from './pages/GameRules';
+import Game from './pages/Game';
 import { AppView } from './helpers';
 
-const Game = () => {
+const ConnectFour = () => {
   const { currentView } = useAppSelector((state) => state.game);
 
   let renderedView = null;
@@ -22,4 +23,4 @@ const Game = () => {
   return <div className="w-full">{renderedView} </div>;
 };
 
-export default Game;
+export default ConnectFour;
