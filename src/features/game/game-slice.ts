@@ -64,7 +64,6 @@ const gameSlice = createSlice({
       }
     },
     startGame(state) {
-      debugger;
       resetGame(state, player1, player2);
       state.currentView = AppView.GAME;
     },
