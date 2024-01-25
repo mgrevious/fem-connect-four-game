@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { ReduxProvider } from '../../../tests/helpers';
+import { ReduxProvider } from '../../../test/helpers';
 import { store } from '../../app/store';
 import ConnectFour from './index';
 
