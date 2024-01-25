@@ -14,7 +14,7 @@ const Header: React.FC = () => {
   return (
     <div>
       <nav
-        className={`${styles.menu} flex justify-between items-center mt-9 mb-6 lg:mt-12 lg:mb-10`}
+        className={`${styles.menu} flex justify-between items-center mt-9 mb-6 lg:mt-[50px] lg:mb-[44px]`}
       >
         <button
           onClick={() => {

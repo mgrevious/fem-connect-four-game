@@ -148,7 +148,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
                 ></div>
 
                 <button
-                  className={`lg:opacity-0 ${
+                  className={`opacity-0 ${
                     !endGame && gridMap[selectedColumn].lastPosition !== 0
                       ? 'lg:hover:opacity-100'
                       : ''

@@ -36,7 +36,7 @@ const Game = () => {
             <Header />
           </header>
           <main className="flex flex-col justify-center items-center">
-            <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-[19px]">
+            <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-[19px] lg:gap-[57px]">
               <div className="order-1 lg:gap-0 lg:order-1 flex lg:block justify-between w-full">
                 <PlayerScore
                   className="ml-6 lg:ml-0"
@@ -59,7 +59,7 @@ const Game = () => {
         <InGameMenu />
         {currentView === AppView.GAME && (
           <div
-            className={`${bgColor} rounded-t-[60px] fixed w-full bottom-0 left-0 right-0 h-[30%] sm:h-[20%] lg:h-[20%] z-10`}
+            className={`${bgColor} rounded-t-[60px] fixed w-full top-[520px] sm:top-[800px] lg:top-[700px] h-5/6 left-0 right-0 z-10`}
           ></div>
         )}
       </FadeInContainer>
@@ -76,3 +76,5 @@ const Game = () => {
 };
 
 export default Game;
+
+// h-[20%] sm:h-[20%] lg:h-[20%]
