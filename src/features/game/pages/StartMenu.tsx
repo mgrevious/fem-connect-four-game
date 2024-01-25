@@ -12,7 +12,7 @@ const FadeInContainer = getFadeInContainer();
 const StartMenu = () => {
   const dispatch = useAppDispatch();
   return (
-    <div className="mx-auto w-11/12 h-screen">
+    <div data-testid="start-menu" className="mx-auto w-11/12 h-screen">
       <div className="flex flex-col items-center">
         <FadeInContainer className="w-full h-screen pt-[200px] lg:mt-[230px] lg:p-[44px] lg:w-[480px] lg:h-[435px] border-0 bg-primary lg:border-l-[3px] lg:border-t-[3px] lg:border-r-[3px] lg:border-b-[13px] lg:border-black rounded-[40px]">
           <div className="mb-[70px] mt-[30px] flex justify-center">
