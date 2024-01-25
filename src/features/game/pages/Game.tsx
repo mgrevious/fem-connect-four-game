@@ -3,8 +3,6 @@ import Grid from '../components/Grid';
 import PlayerScore from '../components/PlayerScore';
 import Header from '../components/Header';
 import InGameMenu from '../components/InGameMenu';
-import StartMenu from '../pages/StartMenu';
-import GameRules from '../pages/GameRules';
 import { AppView, PlayerName } from '../helpers';
 import { getFadeInContainer } from '../styled-helpers';
 
@@ -25,56 +23,41 @@ const Game = () => {
     bgColor = 'bg-mustard';
   }
 
-  let renderedView = null;
-  if (currentView === AppView.GAME_RULES) {
-    renderedView = <GameRules />;
-  } else if (currentView === AppView.GAME) {
-    renderedView = (
-      <FadeInContainer className="relative z-10">
-        <div className="relative min-h-screen z-30">
-          <header className="max-w-[332px] sm:max-w-[636px] mx-auto">
-            <Header />
-          </header>
-          <main className="flex flex-col justify-center items-center">
-            <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-[19px] lg:gap-[57px]">
-              <div className="order-1 lg:gap-0 lg:order-1 flex lg:block justify-between w-full">
-                <PlayerScore
-                  className="ml-6 lg:ml-0"
-                  positionClass={player1Class}
-                  player={player1}
-                />
-                <div className="lg:hidden w-[142px] sm:w-[271px] mr-6">
-                  <PlayerScore positionClass={player2Class} player={player2} />
-                </div>
-              </div>
-              <div className="order-3 lg:order-2">
-                <Grid />
-              </div>
-              <div className="hidden lg:order-3 lg:block">
+  return (
+    <FadeInContainer className="relative z-10">
+      <div className="relative min-h-screen z-30">
+        <header className="max-w-[332px] sm:max-w-[636px] mx-auto">
+          <Header />
+        </header>
+        <main className="flex flex-col justify-center items-center">
+          <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-[19px] lg:gap-[57px]">
+            <div className="order-1 lg:gap-0 lg:order-1 flex lg:block justify-between w-full">
+              <PlayerScore
+                className="ml-6 lg:ml-0"
+                positionClass={player1Class}
+                player={player1}
+              />
+              <div className="lg:hidden w-[142px] sm:w-[271px] mr-6">
                 <PlayerScore positionClass={player2Class} player={player2} />
               </div>
             </div>
-          </main>
-        </div>
-        <InGameMenu />
-        {currentView === AppView.GAME && (
-          <div
-            className={`${bgColor} rounded-t-[60px] fixed w-full top-[520px] sm:top-[800px] lg:top-[700px] h-5/6 left-0 right-0 z-10`}
-          ></div>
-        )}
-      </FadeInContainer>
-    );
-  } else {
-    renderedView = (
-      <main className="bg-primary lg:bg-primary-dark">
-        <StartMenu />
-      </main>
-    );
-  }
-
-  return <div className="w-full">{renderedView} </div>;
+            <div className="order-3 lg:order-2">
+              <Grid />
+            </div>
+            <div className="hidden lg:order-3 lg:block">
+              <PlayerScore positionClass={player2Class} player={player2} />
+            </div>
+          </div>
+        </main>
+      </div>
+      <InGameMenu />
+      {currentView === AppView.GAME && (
+        <div
+          className={`${bgColor} rounded-t-[60px] fixed w-full top-[520px] sm:top-[800px] lg:top-[700px] h-5/6 left-0 right-0 z-10`}
+        ></div>
+      )}
+    </FadeInContainer>
+  );
 };
 
 export default Game;
-
-// h-[20%] sm:h-[20%] lg:h-[20%]
