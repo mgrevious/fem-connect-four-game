@@ -13,7 +13,7 @@ import MarkerYellowSvg from '../../../assets/images/marker-yellow.svg';
 import { PlayerColor } from '../helpers';
 import { ColumnNum } from '../game.types';
 
-import styles from '../game.module.css';
+import styles from '../ConnectFour.module.css';
 
 interface Props {
   setAnimationComplete: (value: boolean) => void;

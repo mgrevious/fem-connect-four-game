@@ -1,9 +1,9 @@
-import { useAppDispatch } from '../../../app/hooks';
-import CheckmarkSvg from '../../../assets/images/icon-check.svg';
-import { selectAppView } from '../game-slice';
-import { AppView } from '../helpers';
-import { getFadeInContainer } from '../styled-helpers';
-import styles from './style.module.css';
+import { useAppDispatch } from '../../../../app/hooks';
+import CheckmarkSvg from '../../../../assets/images/icon-check.svg';
+import { selectAppView } from '../../game-slice';
+import { AppView } from '../../helpers';
+import { getFadeInContainer } from '../../styled-helpers';
+import styles from './GameRules.module.css';
 
 const FadeInContainer = getFadeInContainer();
 

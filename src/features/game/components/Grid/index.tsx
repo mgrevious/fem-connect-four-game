@@ -1,11 +1,11 @@
 import { useCallback, useRef, useState } from 'react';
-import { useAppSelector } from '../../../app/hooks';
-import Display from './display';
-import Selector from './Selector';
-import Row from './Row';
-import { ColumnNum } from '../game.types';
+import { useAppSelector } from '../../../../app/hooks';
+import Display from '../Display';
+import Selector from '../Selector';
+import Row from '../Row';
+import { ColumnNum } from '../../game.types';
 
-import styles from '../game.module.css';
+import styles from './Grid.module.css';
 
 const rowClass =
   'flex flex-col items-center justify-between sm:w-[72px] opacity-80 h-[286px] sm:h-[518px] sm:pt-[10px]';

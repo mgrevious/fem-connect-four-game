@@ -1,0 +1,29 @@
+.gridBack {
+  background-color: transparent;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/images/board-layer-black-small.svg');
+  height: 336px;
+  width: 341px;
+
+  @media screen(sm) {
+    background-image: url('../../../../assets/images/board-layer-black-large.svg');
+    height: 610px;
+    width: 636px;
+  }
+}
+
+.gridFront {
+  background-color: transparent;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/images/board-layer-white-small.svg');
+  height: 326px;
+  width: 341px;
+
+  @media screen(sm) {
+    background-image: url('../../../../assets/images/board-layer-white-large.svg');
+    height: 600px;
+    width: 638px;
+  }
+}

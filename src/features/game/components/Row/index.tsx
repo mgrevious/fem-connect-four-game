@@ -1,9 +1,10 @@
-import { useAppSelector } from '../../../app/hooks';
-import { ColumnNum, GamePieceState } from '../game.types';
-import { PlayerColor } from '../helpers';
-
-import styles from '../game.module.css';
 import { MutableRefObject } from 'react';
+import { useAppSelector } from '../../../../app/hooks';
+import { ColumnNum, GamePieceState } from '../../game.types';
+import { PlayerColor } from '../../helpers';
+
+import styles from './Row.module.css';
+import gameStyles from '../../ConnectFour.module.css';
 
 interface Props {
   columnIndex: ColumnNum;
@@ -33,10 +34,10 @@ const Row: React.FC<Props> = ({
           ref={dropPiece}
           id={`gamepiece_${columnIndex}${index + 1}`}
           key={index}
-          className={`${styles.gamePiece} ${
+          className={`${gameStyles.gamePiece} ${
             gamePieceState.color === PlayerColor.RED
-              ? styles.red
-              : styles.yellow
+              ? gameStyles.red
+              : gameStyles.yellow
           } ${otherClasses} ${
             showGamePiece ? `visible ${styles.bounce}` : 'invisible'
           } h-[40px] sm:h-[73px]`}
@@ -51,7 +52,7 @@ const Row: React.FC<Props> = ({
         <div
           id={`${columnIndex}${index + 1}`}
           key={index}
-          className={`${styles.gamePiece} ${
+          className={`${gameStyles.gamePiece} ${
             gamePieceState.color === PlayerColor.RED
               ? styles.red
               : styles.yellow
@@ -67,7 +68,7 @@ const Row: React.FC<Props> = ({
       <div
         id={`${columnIndex}${index + 1}`}
         key={index}
-        className={`${styles.gamePiece} ${otherClasses} h-[44px] sm:h-[71px]`}
+        className={`${gameStyles.gamePiece} ${otherClasses} h-[44px] sm:h-[71px]`}
       ></div>
     );
   });
