@@ -4,17 +4,18 @@ import {
   restartGame,
   selectAppView,
   setRemainingTime,
-} from '../game-slice';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { AppView } from '../helpers';
+} from '../../game-slice';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import { AppView } from '../../helpers';
 
-import appStyles from '../../../app.module.css';
+import appStyles from '../../../../app.module.css';
 
 const InGameMenu = () => {
   const dispatch = useAppDispatch();
   const { isPaused } = useAppSelector((state) => state.game);
   return (
     <div
+      data-testid="in-game-menu"
       aria-hidden="true"
       className={`${
         isPaused ? 'visible bg-black/50' : 'invisible'
@@ -29,6 +30,7 @@ const InGameMenu = () => {
           pause
         </h2>
         <button
+          data-testid="in-game-menu-continue"
           onClick={() => {
             dispatch(pauseGame(false));
           }}
@@ -37,6 +39,7 @@ const InGameMenu = () => {
           continue game
         </button>
         <button
+          data-testid="in-game-menu-restart"
           onClick={() => {
             dispatch(restartGame());
             dispatch(setRemainingTime(REMAINING_TIME));
@@ -47,6 +50,7 @@ const InGameMenu = () => {
           restart
         </button>
         <button
+          data-testid="in-game-menu-quit"
           onClick={() => {
             dispatch(selectAppView(AppView.MAIN_MENU));
           }}

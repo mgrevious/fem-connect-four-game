@@ -17,6 +17,7 @@ const Header: React.FC = () => {
         className={`${styles.menu} flex justify-between items-center mt-9 mb-6 lg:mt-[50px] lg:mb-[44px]`}
       >
         <button
+          data-testid="header-navigate-to-menu"
           onClick={() => {
             dispatch(pauseGame(true));
           }}
@@ -25,6 +26,7 @@ const Header: React.FC = () => {
           menu
         </button>
         <button
+          data-testid="header-restart"
           onClick={() => {
             dispatch(restartGame());
             dispatch(setRemainingTime(REMAINING_TIME));
