@@ -90,8 +90,6 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
     selectedColumn,
   ]);
 
-  const selectedRow = useRef(highestPositionList[selectedColumn]);
-
   useEffect(() => {
     const selectedRowNum = highestPositionList[selectedColumn];
 
@@ -130,12 +128,13 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
             return (
               <div
                 key={index}
-                className=" flex justify-center w-[42px] sm:w-[71px] relative"
+                className="flex justify-center w-[42px] sm:w-[71px] relative"
               >
                 {isColumnSelected &&
                   highestPositionList[selectedColumn] !== undefined &&
                   (highestPositionList[selectedColumn] as RowNum) > 0 && (
                     <AnimatedGamePiece
+                      data-testid="animated-game-piece"
                       $offset={getAnimationOffset()}
                       ref={gamePieceEl}
                       className={`${styles.gamePiece} ${
@@ -162,7 +161,11 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
                     dispatch(selectGridPosition(column));
                   }}
                 >
-                  <img src={markerSrc} alt="Marker" />
+                  <img
+                    data-testid="selector-marker"
+                    src={markerSrc}
+                    alt="Marker"
+                  />
                 </button>
               </div>
             );
