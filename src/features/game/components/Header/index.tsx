@@ -12,7 +12,7 @@ import styles from './header.module.css';
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   return (
-    <div>
+    <div data-testid="header">
       <nav
         className={`${styles.menu} flex justify-between items-center mt-9 mb-6 lg:mt-[50px] lg:mb-[44px]`}
       >

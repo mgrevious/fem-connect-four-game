@@ -19,6 +19,7 @@ const StartMenu = () => {
             <img src={LogoSvg} alt="logo icon" />
           </div>
           <button
+            data-testid="player-vs-player-btn"
             onClick={() => {
               dispatch(startGame());
             }}
@@ -34,6 +35,7 @@ const StartMenu = () => {
             </span>
           </button>
           <button
+            data-testid="game-rules-btn"
             onClick={() => {
               dispatch(selectAppView(AppView.GAME_RULES));
             }}

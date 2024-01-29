@@ -147,3 +147,7 @@ export function findWinner(grid: ColumnData[], color: PlayerColor) {
   }
   return false;
 }
+
+export const gridColumns: ColumnNum[] = [0, 1, 2, 3, 4, 5, 6];
+export const desktopGamePieceOffsets = [17, 105, 193, 281, 369, 457];
+export const mobileGamePieceOffsets = [12, 64, 114, 162, 209, 254];

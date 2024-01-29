@@ -19,7 +19,7 @@ const Grid = () => {
   }, []);
 
   return (
-    <div className="w-full relative">
+    <div data-testid="grid" className="w-full relative">
       <div className="flex justify-center z-10">
         <div className={`${styles.gridBack} relative`}>
           <Selector setAnimationComplete={setAnimationComplete} />

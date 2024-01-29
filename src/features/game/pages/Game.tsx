@@ -25,7 +25,7 @@ const Game = () => {
 
   return (
     <FadeInContainer className="relative z-10">
-      <div className="relative min-h-screen z-30">
+      <div data-testid="game" className="relative min-h-screen z-30">
         <header className="max-w-[332px] sm:max-w-[636px] mx-auto">
           <Header />
         </header>
@@ -53,6 +53,7 @@ const Game = () => {
       <InGameMenu />
       {currentView === AppView.GAME && (
         <div
+          data-testid="bg-color"
           className={`${bgColor} rounded-t-[60px] fixed w-full top-[520px] sm:top-[800px] lg:top-[700px] h-5/6 left-0 right-0 z-10`}
         ></div>
       )}

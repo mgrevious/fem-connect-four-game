@@ -28,7 +28,7 @@ const player2: Player = {
 
 export const REMAINING_TIME = 30 * 1000;
 
-const initialState: GameState = {
+export const initialState: GameState = {
   player1,
   player2,
   startingPlayer: player1,

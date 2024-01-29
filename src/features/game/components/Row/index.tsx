@@ -31,6 +31,7 @@ const Row: React.FC<Props> = ({
     if (gamePieceState?.active) {
       return (
         <div
+          data-testid={`active-gamepiece_${columnIndex}${index + 1}`}
           ref={dropPiece}
           id={`gamepiece_${columnIndex}${index + 1}`}
           key={index}
@@ -50,12 +51,13 @@ const Row: React.FC<Props> = ({
     } else if (gamePieceState?.selected) {
       return (
         <div
+          data-testid={`selected-gamepiece_${columnIndex}${index + 1}`}
           id={`${columnIndex}${index + 1}`}
           key={index}
           className={`${gameStyles.gamePiece} ${
             gamePieceState.color === PlayerColor.RED
-              ? styles.red
-              : styles.yellow
+              ? gameStyles.red
+              : gameStyles.yellow
           } ${otherClasses} opacity-100 h-[40px] sm:h-[73px]`}
         >
           {gameWinner !== undefined && gamePieceState.highlight
@@ -66,7 +68,7 @@ const Row: React.FC<Props> = ({
     }
     return (
       <div
-        id={`${columnIndex}${index + 1}`}
+        id={`gamepiece_${columnIndex}${index + 1}`}
         key={index}
         className={`${gameStyles.gamePiece} ${otherClasses} h-[44px] sm:h-[71px]`}
       ></div>

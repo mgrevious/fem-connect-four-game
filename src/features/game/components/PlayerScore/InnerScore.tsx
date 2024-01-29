@@ -9,7 +9,7 @@ interface Props {
 const InnerScore: React.FC<Props> = ({ player }) => {
   const isPlayerOne = player.name === PlayerName.PLAYER_ONE;
   return (
-    <>
+    <div data-testid="inner-score">
       <p
         className={`${
           isPlayerOne ? 'sm:text-left' : 'sm:text-right sm:order-2 lg:order-1'
@@ -24,7 +24,7 @@ const InnerScore: React.FC<Props> = ({ player }) => {
       >
         {player.currentScore}
       </p>
-    </>
+    </div>
   );
 };
 

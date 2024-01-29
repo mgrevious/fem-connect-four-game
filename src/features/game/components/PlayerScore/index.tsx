@@ -19,7 +19,12 @@ const PlayerScore: React.FC<Props> = ({ player, positionClass, className }) => {
 
   return (
     <div
-      className={`${className} ${globalStyles.border} flex flex-col sm:flex-row lg:flex-col items-center bg-white rounded-[20px] py-3 sm:px-[45px] lg:px-0 lg:pt-[46px] lg:pb-[17px] w-[142px] sm:w-[271px] lg:w-[148px] relative`}
+      data-testid={`${
+        player.name === PlayerName.PLAYER_ONE ? 'player1' : 'player2'
+      }`}
+      className={`${className || ''} ${
+        globalStyles.border
+      } flex flex-col sm:flex-row lg:flex-col items-center bg-white rounded-[20px] py-3 sm:px-[45px] lg:px-0 lg:pt-[46px] lg:pb-[17px] w-[142px] sm:w-[271px] lg:w-[148px] relative`}
     >
       <InnerScore player={player} />
       {isPlayerOne ? (

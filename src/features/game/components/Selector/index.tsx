@@ -6,27 +6,28 @@ import {
   selectColumn,
   setRemainingTime,
   REMAINING_TIME,
-} from '../game-slice';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import MarkerRedSvg from '../../../assets/images/marker-red.svg';
-import MarkerYellowSvg from '../../../assets/images/marker-yellow.svg';
-import { PlayerColor } from '../helpers';
-import { ColumnNum } from '../game.types';
+} from '../../game-slice';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import MarkerRedSvg from '../../../../assets/images/marker-red.svg';
+import MarkerYellowSvg from '../../../../assets/images/marker-yellow.svg';
+import { AnimatedGamePiece } from './helpers';
+import {
+  PlayerColor,
+  RowNum,
+  desktopGamePieceOffsets,
+  gridColumns,
+  mobileGamePieceOffsets,
+} from '../../helpers';
 
-import styles from '../ConnectFour.module.css';
+import styles from '../../ConnectFour.module.css';
 
 interface Props {
   setAnimationComplete: (value: boolean) => void;
 }
 
-const gridColumns: ColumnNum[] = [0, 1, 2, 3, 4, 5, 6];
-const desktopGamePieceOffsets = [17, 105, 193, 281, 369, 457];
-const mobileGamePieceOffsets = [12, 64, 114, 162, 209, 254];
-
 const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
   const dispatch = useAppDispatch();
   const gamePieceEl = useRef<HTMLDivElement | null>(null);
-  const gamePieceAnimation = useRef<Animation | null>(null);
   const documentWidth = useRef<number>(document.body.clientWidth);
   const selectorEl = useRef<HTMLDivElement | null>(null);
 
@@ -58,48 +59,43 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
   };
 
   useEffect(() => {
+    const gamePiece = gamePieceEl.current;
+    const onAnimationEnd = () => {
+      dispatch(setIsColumnSelected(false));
+      setAnimationComplete(true);
+      setTimeout(() => {
+        dispatch(checkForGameWinner());
+        dispatch(setRemainingTime(REMAINING_TIME));
+      }, 200);
+    };
+
     window.addEventListener('resize', handleResize);
+    if (
+      isColumnSelected &&
+      highestPositionList[selectedColumn] !== undefined &&
+      (highestPositionList[selectedColumn] as RowNum) > 0
+    ) {
+      gamePiece?.addEventListener('animationend', onAnimationEnd);
+    }
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      gamePiece?.removeEventListener('animationend', onAnimationEnd);
     };
-  }, []);
+  }, [
+    dispatch,
+    setAnimationComplete,
+    isColumnSelected,
+    highestPositionList,
+    selectedColumn,
+  ]);
+
+  const selectedRow = useRef(highestPositionList[selectedColumn]);
 
   useEffect(() => {
     const selectedRowNum = highestPositionList[selectedColumn];
 
-    if (
-      isColumnSelected &&
-      selectedRowNum !== undefined &&
-      selectedRowNum > 0
-    ) {
-      gamePieceAnimation.current = new Animation(
-        new KeyframeEffect(
-          gamePieceEl.current,
-          [
-            {
-              top: '60px',
-            },
-            {
-              top: `${getAnimationOffset()}px`,
-            },
-          ],
-          {
-            duration: 600,
-            easing: 'cubic-bezier(0.32, 0, 0.67, 0)',
-          }
-        )
-      );
-      gamePieceAnimation.current.play();
-      gamePieceAnimation.current.onfinish = () => {
-        dispatch(setIsColumnSelected(false));
-        setAnimationComplete(true);
-        setTimeout(() => {
-          dispatch(checkForGameWinner());
-          dispatch(setRemainingTime(REMAINING_TIME));
-        }, 200);
-      };
-    } else if (selectedRowNum !== undefined && selectedRowNum === 0) {
+    if (selectedRowNum !== undefined && selectedRowNum === 0) {
       // no animation for gamepiece at row 0
       dispatch(setIsColumnSelected(false));
       setAnimationComplete(true);
@@ -124,6 +120,7 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
 
   return (
     <div
+      data-testid="selector"
       ref={selectorEl}
       className="absolute -top-[38px] left-0 right-0 h-[43px] w-full flex justify-center"
     >
@@ -132,22 +129,26 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
           if (selectedColumn === column) {
             return (
               <div
-                id=""
                 key={index}
                 className=" flex justify-center w-[42px] sm:w-[71px] relative"
               >
-                <div
-                  ref={gamePieceEl}
-                  className={`${styles.gamePiece} ${
-                    activePlayer.color === PlayerColor.RED
-                      ? styles.red
-                      : styles.yellow
-                  } w-[42px] h-[44px] sm:w-[71px] sm:h-[75px] flex items-center justify-center mb-[17px] ${
-                    isColumnSelected ? 'visible' : 'invisible'
-                  } absolute left-0 top-10`}
-                ></div>
-
+                {isColumnSelected &&
+                  highestPositionList[selectedColumn] !== undefined &&
+                  (highestPositionList[selectedColumn] as RowNum) > 0 && (
+                    <AnimatedGamePiece
+                      $offset={getAnimationOffset()}
+                      ref={gamePieceEl}
+                      className={`${styles.gamePiece} ${
+                        activePlayer.color === PlayerColor.RED
+                          ? styles.red
+                          : styles.yellow
+                      } w-[42px] h-[44px] sm:w-[71px] sm:h-[75px] flex items-center justify-center mb-[17px] ${
+                        isColumnSelected ? 'visible' : 'invisible'
+                      } absolute left-0 top-10`}
+                    ></AnimatedGamePiece>
+                  )}
                 <button
+                  data-testid={`selector-btn-${column}`}
                   className={`opacity-0 ${
                     !endGame && gridMap[selectedColumn].lastPosition !== 0
                       ? 'lg:hover:opacity-100'
@@ -169,13 +170,13 @@ const Selector: React.FC<Props> = ({ setAnimationComplete }) => {
 
           return (
             <div
-              id=""
               key={index}
               className={`flex justify-center w-[42px] sm:w-[71px] sm:h-[75px] opacity-0 ${
                 endGame ? 'cursor-default' : 'hover:opacity-100'
               }`}
             >
               <button
+                data-testid={`selector-btn-${column}`}
                 disabled={endGame}
                 onClick={() => {
                   setAnimationComplete(false);
