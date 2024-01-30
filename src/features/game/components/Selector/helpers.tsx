@@ -1,5 +1,4 @@
 import styled, { keyframes } from 'styled-components';
-import { ColumnNum } from '../../game.types';
 
 function dropAnimation(offset: number) {
   return keyframes`
