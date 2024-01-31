@@ -8,7 +8,7 @@
 
   @media screen(sm) {
     background-image: url('../../../../assets/images/board-layer-black-large.svg');
-    height: 606px;
+    height: 605px;
     width: 636px;
   }
 }
@@ -23,7 +23,7 @@
 
   @media screen(sm) {
     background-image: url('../../../../assets/images/board-layer-white-large.svg');
-    height: 593px;
+    height: 592px;
     width: 638px;
   }
 }

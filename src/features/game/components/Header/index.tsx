@@ -21,7 +21,7 @@ const Header: React.FC = () => {
           onClick={() => {
             dispatch(pauseGame(true));
           }}
-          className="h-[39px] px-[21px] text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90"
+          className="h-[39px] px-[21px] text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90 leading-[16px]"
         >
           menu
         </button>
@@ -33,7 +33,7 @@ const Header: React.FC = () => {
             dispatch(setTimerReset(true));
             dispatch(pauseGame(false));
           }}
-          className="h-[39px] px-[21px] text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90"
+          className="h-[39px] px-[21px] text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90 leading-[16px]"
         >
           restart
         </button>
