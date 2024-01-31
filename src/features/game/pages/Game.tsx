@@ -33,7 +33,7 @@ const Game = () => {
           <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-[19px] lg:gap-[57px]">
             <div className="order-1 lg:gap-0 lg:order-1 flex lg:block justify-between w-full">
               <PlayerScore
-                className="ml-6 lg:ml-0 lg:mb-12"
+                className="ml-6 lg:ml-0 lg:mb-10"
                 positionClass={{
                   icon: player1IconClass,
                   container: 'sm:justify-between lg:justify-center',
@@ -55,7 +55,7 @@ const Game = () => {
             </div>
             <div className="hidden lg:order-3 lg:block">
               <PlayerScore
-                className="lg:mb-12"
+                className="lg:mb-10"
                 positionClass={{
                   icon: player2IconClass,
                   container: 'sm:justify-between lg:justify-center',
