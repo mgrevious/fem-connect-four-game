@@ -1,5 +1,4 @@
 import React from 'react';
-// import MenuSvg from '../../../../assets/images/logo.svg';
 import { useAppDispatch } from '../../../../app/hooks';
 import {
   REMAINING_TIME,
@@ -22,7 +21,7 @@ const Header: React.FC = () => {
           onClick={() => {
             dispatch(pauseGame(true));
           }}
-          className="h-[39px] px-8 text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90"
+          className="h-[39px] px-[21px] text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90"
         >
           menu
         </button>
@@ -34,7 +33,7 @@ const Header: React.FC = () => {
             dispatch(setTimerReset(true));
             dispatch(pauseGame(false));
           }}
-          className="h-[39px] px-5 text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90"
+          className="h-[39px] px-[21px] text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90"
         >
           restart
         </button>
