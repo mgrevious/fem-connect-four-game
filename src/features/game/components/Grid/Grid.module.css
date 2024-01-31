@@ -8,7 +8,7 @@
 
   @media screen(sm) {
     background-image: url('../../../../assets/images/board-layer-black-large.svg');
-    height: 607px;
+    height: 606px;
     width: 636px;
   }
 }
@@ -18,12 +18,12 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/images/board-layer-white-small.svg');
-  height: 326px;
+  height: 323px;
   width: 341px;
 
   @media screen(sm) {
     background-image: url('../../../../assets/images/board-layer-white-large.svg');
-    height: 594px;
+    height: 593px;
     width: 638px;
   }
 }
