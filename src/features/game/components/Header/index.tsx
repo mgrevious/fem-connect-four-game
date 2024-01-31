@@ -6,6 +6,7 @@ import {
   pauseGame,
   restartGame,
   setRemainingTime,
+  setTimerReset,
 } from '../../game-slice';
 import styles from './header.module.css';
 
@@ -30,6 +31,7 @@ const Header: React.FC = () => {
           onClick={() => {
             dispatch(restartGame());
             dispatch(setRemainingTime(REMAINING_TIME));
+            dispatch(setTimerReset(true));
             dispatch(pauseGame(false));
           }}
           className="h-[39px] px-5 text-white font-bold bg-primary-dark uppercase rounded-[30px] hover:brightness-90"

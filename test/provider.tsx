@@ -1,5 +1,5 @@
-import { Store, configureStore } from '@reduxjs/toolkit';
-import React, { PropsWithChildren } from 'react';
+import { Store } from '@reduxjs/toolkit';
+import React from 'react';
 import { Provider } from 'react-redux';
 
 interface Props {

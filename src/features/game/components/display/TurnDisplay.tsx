@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import {
   toggleActivePlayer,
   autoSelectWinner,
-  setTimerReset,
   setRemainingTime,
 } from '../../game-slice';
 import { PlayerColor, PlayerName } from '../../helpers';
@@ -17,16 +16,10 @@ interface Props {
 
 const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
   const dispatch = useAppDispatch();
-  const [restartKey, setRestartKey] = useState(1);
   const [showCountdown, setShowCountdown] = useState(true);
-  const {
-    activePlayer,
-    gameWinner,
-    endGame,
-    isPaused,
-    timerReset,
-    remainingTime,
-  } = useAppSelector((state) => state.game);
+
+  const { activePlayer, gameWinner, endGame, isPaused, remainingTime } =
+    useAppSelector((state) => state.game);
 
   useEffect(() => {
     if (countdownApi.current) {
@@ -42,13 +35,6 @@ const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
       }
     }
   }, [endGame, isPaused, countdownApi]);
-
-  useEffect(() => {
-    if (timerReset) {
-      setRestartKey(restartKey + 1);
-      dispatch(setTimerReset(false));
-    }
-  }, [timerReset, dispatch, restartKey]);
 
   return (
     <div
@@ -70,7 +56,7 @@ const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
         <p className="text-center text-[56px] leading-[56px]">
           {showCountdown ? (
             <Countdown
-              key={restartKey}
+              // key={restartKey}
               ref={(countdown) => {
                 if (countdown) {
                   countdownApi.current = countdown.getApi();
@@ -78,9 +64,7 @@ const TurnDisplay: React.FC<Props> = ({ countdownApi }) => {
               }}
               autoStart={false}
               date={Date.now() + remainingTime}
-              renderer={({ seconds }) => {
-                return seconds;
-              }}
+              renderer={({ seconds }) => seconds}
               onPause={({ total }) => {
                 dispatch(setRemainingTime(total));
               }}
