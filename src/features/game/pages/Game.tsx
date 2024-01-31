@@ -8,8 +8,8 @@ import { getFadeInContainer } from '../styled-helpers';
 
 const FadeInContainer = getFadeInContainer();
 
-const player1Class = '-left-7 lg:right-0 lg:left-0';
-const player2Class = '-right-7 lg:right-0 lg:left-0';
+const player1IconClass = '-left-7 lg:right-0 lg:left-0';
+const player2IconClass = '-right-7 lg:right-0 lg:left-0';
 
 const Game = () => {
   const { player1, player2, currentView, gameWinner } = useAppSelector(
@@ -34,18 +34,33 @@ const Game = () => {
             <div className="order-1 lg:gap-0 lg:order-1 flex lg:block justify-between w-full">
               <PlayerScore
                 className="ml-6 lg:ml-0"
-                positionClass={player1Class}
+                positionClass={{
+                  icon: player1IconClass,
+                  container: 'sm:justify-between lg:justify-center',
+                }}
                 player={player1}
               />
               <div className="lg:hidden w-[142px] sm:w-[271px] mr-6">
-                <PlayerScore positionClass={player2Class} player={player2} />
+                <PlayerScore
+                  positionClass={{
+                    icon: player2IconClass,
+                    container: 'sm:justify-between lg:justify-center',
+                  }}
+                  player={player2}
+                />
               </div>
             </div>
             <div className="order-3 lg:order-2">
               <Grid />
             </div>
             <div className="hidden lg:order-3 lg:block">
-              <PlayerScore positionClass={player2Class} player={player2} />
+              <PlayerScore
+                positionClass={{
+                  icon: player2IconClass,
+                  container: 'sm:justify-between lg:justify-center',
+                }}
+                player={player2}
+              />
             </div>
           </div>
         </main>

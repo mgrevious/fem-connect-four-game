@@ -9,7 +9,10 @@ interface Props {
 const InnerScore: React.FC<Props> = ({ player }) => {
   const isPlayerOne = player.name === PlayerName.PLAYER_ONE;
   return (
-    <div data-testid="inner-score">
+    <div
+      data-testid="inner-score"
+      className="flex flex-col sm:flex-row lg:flex-col sm:justify-between sm:items-center lg:justify-center w-full"
+    >
       <p
         className={`${
           isPlayerOne ? 'sm:text-left' : 'sm:text-right sm:order-2 lg:order-1'

@@ -10,7 +10,7 @@
   width: 100%;
 
   @media screen(sm) {
-    bottom: -105px;
+    bottom: -102px;
   }
   &.red {
     background-image: url('../../../../assets/images/turn-background-red.svg');
@@ -20,6 +20,6 @@
   }
 
   @media (min-width: 1024px) {
-    bottom: -113px;
+    bottom: -106px;
   }
 }
