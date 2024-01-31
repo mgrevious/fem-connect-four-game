@@ -3,7 +3,7 @@ import Grid from '../components/Grid';
 import PlayerScore from '../components/PlayerScore';
 import Header from '../components/Header';
 import InGameMenu from '../components/InGameMenu';
-import { PlayerName } from '../helpers';
+import { AppView, PlayerName } from '../helpers';
 import { getFadeInContainer } from '../styled-helpers';
 
 const FadeInContainer = getFadeInContainer();
@@ -12,7 +12,7 @@ const player1IconClass = '-left-7 lg:right-0 lg:left-0';
 const player2IconClass = '-right-7 lg:right-0 lg:left-0';
 
 const Game = () => {
-  const { player1, player2, gameWinner } = useAppSelector(
+  const { player1, player2, gameWinner, currentView } = useAppSelector(
     (state) => state.game
   );
 
@@ -67,10 +67,12 @@ const Game = () => {
         </main>
       </div>
       <InGameMenu />
-      <div
-        data-testid="bg-color"
-        className={`${bgColor} rounded-t-[60px] fixed w-full top-[520px] sm:top-[800px] lg:top-[700px] h-5/6 left-0 right-0 z-10`}
-      ></div>
+      {currentView === AppView.GAME && (
+        <div
+          data-testid="bg-color"
+          className={`${bgColor} rounded-t-[60px] fixed w-full top-[520px] sm:top-[800px] lg:top-[700px] h-5/6 left-0 right-0 z-10`}
+        ></div>
+      )}
     </FadeInContainer>
   );
 };
