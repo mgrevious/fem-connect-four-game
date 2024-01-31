@@ -3,7 +3,7 @@ import Grid from '../components/Grid';
 import PlayerScore from '../components/PlayerScore';
 import Header from '../components/Header';
 import InGameMenu from '../components/InGameMenu';
-import { AppView, PlayerName } from '../helpers';
+import { PlayerName } from '../helpers';
 import { getFadeInContainer } from '../styled-helpers';
 
 const FadeInContainer = getFadeInContainer();
@@ -12,7 +12,7 @@ const player1IconClass = '-left-7 lg:right-0 lg:left-0';
 const player2IconClass = '-right-7 lg:right-0 lg:left-0';
 
 const Game = () => {
-  const { player1, player2, currentView, gameWinner } = useAppSelector(
+  const { player1, player2, gameWinner } = useAppSelector(
     (state) => state.game
   );
 
@@ -33,7 +33,7 @@ const Game = () => {
           <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-[19px] lg:gap-[57px]">
             <div className="order-1 lg:gap-0 lg:order-1 flex lg:block justify-between w-full">
               <PlayerScore
-                className="ml-6 lg:ml-0 lg:mb-24"
+                className="ml-6 lg:ml-0 lg:mt-12"
                 positionClass={{
                   icon: player1IconClass,
                   container: 'sm:justify-between lg:justify-center',
@@ -55,7 +55,7 @@ const Game = () => {
             </div>
             <div className="hidden lg:order-3 lg:block">
               <PlayerScore
-                className="lg:mb-24"
+                className="lg:mt-12"
                 positionClass={{
                   icon: player2IconClass,
                   container: 'sm:justify-between lg:justify-center',
