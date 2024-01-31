@@ -33,7 +33,7 @@ const Game = () => {
           <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-[19px] lg:gap-[57px]">
             <div className="order-1 lg:gap-0 lg:order-1 flex lg:block justify-between w-full">
               <PlayerScore
-                className="ml-6 lg:ml-0"
+                className="ml-6 lg:ml-0 lg:mb-24"
                 positionClass={{
                   icon: player1IconClass,
                   container: 'sm:justify-between lg:justify-center',
@@ -55,6 +55,7 @@ const Game = () => {
             </div>
             <div className="hidden lg:order-3 lg:block">
               <PlayerScore
+                className="lg:mb-24"
                 positionClass={{
                   icon: player2IconClass,
                   container: 'sm:justify-between lg:justify-center',
@@ -66,12 +67,10 @@ const Game = () => {
         </main>
       </div>
       <InGameMenu />
-      {currentView === AppView.GAME && (
-        <div
-          data-testid="bg-color"
-          className={`${bgColor} rounded-t-[60px] fixed w-full top-[520px] sm:top-[800px] lg:top-[700px] h-5/6 left-0 right-0 z-10`}
-        ></div>
-      )}
+      <div
+        data-testid="bg-color"
+        className={`${bgColor} rounded-t-[60px] fixed w-full top-[520px] sm:top-[800px] lg:top-[700px] h-5/6 left-0 right-0 z-10`}
+      ></div>
     </FadeInContainer>
   );
 };
